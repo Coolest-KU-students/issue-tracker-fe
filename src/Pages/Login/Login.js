@@ -8,16 +8,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 //import { LogInUser } from "../../reducers/actions/RoleActions";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { colors } from "@material-ui/core";
 //import { useDispatch } from "react-redux";
-import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-
+import Notification from "../../GlobalFeatures/Notification";
+import { ClearNotification } from "../../GlobalFeatures/Notification";
 //const BackgroundColor = colors.grey[50];
 
 //TODO: Get The Logo
@@ -54,7 +51,7 @@ export default function LogIn() {
 
   const [email, setEmail] = useState("");
 
-  const [AlertOpen, openAlert] = useState(false);
+  const [CurrentNotification, setNotification] = useState(0);
 
   //  const dispatch = useDispatch();
 
@@ -65,38 +62,10 @@ export default function LogIn() {
     <div className={classes.page}>
       <Container component="main" maxWidth="sm">
         <div className={classes.paper}>
-          <Collapse in={AlertOpen}>
-            <Box
-              borderRadius={50}
-              p={2}
-              bgcolor={email ? "success.main" : "error.main"}
-              color={email ? "success.contrastText" : "error.contrastText"}
-            >
-              {email && (
-                <span>
-                  Password Recovery has been sent to the email &apos;{email}
-                  &apos;
-                </span>
-              )}
-              {!email && <span>Please provide an email</span>}
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  openAlert(false);
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
-          </Collapse>
+          <Avatar className={classes.avatar}>
+            <Image />
+          </Avatar>
 
-          <Collapse in={!AlertOpen}>
-            <Avatar className={classes.avatar}>
-              <Image />
-            </Avatar>
-          </Collapse>
           <Typography component="div" variant="h2">
             Issue Register
           </Typography>
@@ -113,7 +82,6 @@ export default function LogIn() {
               autoFocus
               onChange={(e) => {
                 setEmail(e.target.value);
-                openAlert(false);
               }}
             />
             <TextField
@@ -137,7 +105,18 @@ export default function LogIn() {
               color="secondary"
               className={classes.submit}
               onClick={
-                () => {}
+                () => {
+                  ClearNotification(CurrentNotification);
+                  setNotification(
+                    email && document.getElementById("password").value
+                      ? Notification(
+                          "Logging In",
+                          "Please wait while our system processes the request",
+                          "warning"
+                        )
+                      : Notification("", "Please Fill In Credentials", "danger")
+                  );
+                }
                 /* HasAgreedToTerms() ? LogInUser(email, dispatch) : SetAgreement(false);
                 }*/
               }
