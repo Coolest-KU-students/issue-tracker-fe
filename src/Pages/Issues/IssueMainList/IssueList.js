@@ -19,12 +19,12 @@ import React, { useState } from "react";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { makeStyles } from "@material-ui/core/styles";
-import NavBar from '../../../GlobalFeatures/Navbar/Navbar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import NavBar from "../../../GlobalFeatures/Navbar/Navbar";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -32,16 +32,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0",
   },
   content: {
-    marginTop: '5rem',
+    marginTop: "5rem",
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    [theme.breakpoints.down('md')]:
-  {
-    marginLeft: '3rem',
-    width:'95%',
-  },
-    display: 'inline-flex',
-    flexDirection: 'column',
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "3rem",
+      width: "95%",
+    },
+    display: "inline-flex",
+    flexDirection: "column",
   },
   TableRows: {
     "&:nth-of-type(odd)": {
@@ -88,61 +87,61 @@ const IssueList = () => {
 
   return (
     <React.Fragment>
-    <NavBar PageName="Issue Tracker">
-      <div>
-    <ListSubheader inset>Example Buttons</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    </div>
-    </NavBar>
-    <Container maxWidth='xl' className={styles.content}>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead >
-            <TableCell>
-              <Typography>Common Filters:</Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="Closed" checked="true" />
-                Hide Closed
-              </Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="MyIssues" />
-                Show&nbsp;Issues Created&nbsp;By&nbsp;Me
-              </Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="MyResponsobilities" />
-                Show&nbsp;Issues with My&nbsp;Responsibility
-              </Typography>
-            </TableCell>
-          </TableHead>
-        </Table>
-        <Table>
-          <TableHead className={styles.TableHead}>
-            <TableCell width={100*ColumnWidths[0]/SumWidths + "%"}>
-              <Button
-                onClick={() => {
-                  SortData("Name");
-                }}
-              >
-                <Typography variant="h6">Name</Typography>
-                {Issues.Column == "Name" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
+      <NavBar PageName="Issue Tracker">
+        <div>
+          <ListSubheader inset>Example Buttons</ListSubheader>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reports" />
+          </ListItem>
+        </div>
+      </NavBar>
+      <Container maxWidth="xl" className={styles.content}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableCell>
+                <Typography>Common Filters:</Typography>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="Closed" checked="true" />
+                  Hide Closed
+                </Typography>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="MyIssues" />
+                  Show&nbsp;Issues Created&nbsp;By&nbsp;Me
+                </Typography>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="MyResponsobilities" />
+                  Show&nbsp;Issues with My&nbsp;Responsibility
+                </Typography>
+              </TableCell>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableHead className={styles.TableHead}>
+              <TableCell width={(100 * ColumnWidths[0]) / SumWidths + "%"}>
+                <Button
+                  onClick={() => {
+                    SortData("Name");
+                  }}
+                >
+                  <Typography variant="h6">Name</Typography>
+                  {Issues.Column == "Name" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
 
               <TableCell width={(100 * ColumnWidths[1]) / SumWidths + "%"}>
                 <Button
