@@ -1,4 +1,9 @@
-import { Checkbox, Container, TableFooter, Typography } from "@material-ui/core";
+import {
+  Checkbox,
+  Container,
+  TableFooter,
+  Typography,
+} from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -31,9 +36,9 @@ const useStyles = makeStyles(() => ({
   TableHead: {
     backgroundColor: "#c5c2c9",
   },
-  BodyTableCells:{
+  BodyTableCells: {
     paddingRight: "2rem",
-  }
+  },
 }));
 
 const IssueList = () => {
@@ -50,10 +55,10 @@ const IssueList = () => {
     }
 */
 
-//Quick calculations to be able to adjust column widths
-  const ColumnWidths = [20, 30, 8, 10, 10]
+  //Quick calculations to be able to adjust column widths
+  const ColumnWidths = [20, 30, 8, 10, 10];
 
-  const SumWidths = ColumnWidths.reduce((a,b) => a+b, 0);
+  const SumWidths = ColumnWidths.reduce((a, b) => a + b, 0);
 
   const styles = useStyles();
 
@@ -65,150 +70,180 @@ const IssueList = () => {
 
   return (
     <React.Fragment>
-     <Container maxWidth="xl">
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead >
-            <TableCell>
-              <Typography>Common Filters:</Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="Closed" checked="true" />
-                Hide Closed
-              </Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="MyIssues" />
-                Show&nbsp;Issues Created&nbsp;By&nbsp;Me
-              </Typography>
-            </TableCell>
-            <TableCell align="right" width="20%">
-              <Typography>
-                <Checkbox id="MyResponsobilities" />
-                Show&nbsp;Issues with My&nbsp;Responsibility
-              </Typography>
-            </TableCell>
-          </TableHead>
-        </Table>
-      </TableContainer>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead className={styles.TableHead}>
-            <TableCell width={100*ColumnWidths[0]/SumWidths + "%"}>
-              <Button
-                onClick={() => {
-                  SortData("Name");
-                }}
-              >
-                <Typography variant="h6">Name</Typography>
-                {Issues.Column == "Name" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
-
-            <TableCell width={100*ColumnWidths[1]/SumWidths + "%"}>
-              <Button
-                onClick={() => {
-                  SortData("Description");
-                }}
-              >
-                <Typography variant="h6">Description</Typography>
-                {Issues.Column == "Description" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
-
-            <TableCell width={100*ColumnWidths[2]/SumWidths + "%"}  align="right">
-              <Button
-                onClick={() => {
-                  SortData("Importance");
-                }}
-              >
-                <Typography variant="h6" align="right">
-                  Importance
+      <Container maxWidth="xl">
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableCell>
+                <Typography>Common Filters:</Typography>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="Closed" checked="true" />
+                  Hide Closed
                 </Typography>
-                {Issues.Column == "Importance" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="MyIssues" />
+                  Show&nbsp;Issues Created&nbsp;By&nbsp;Me
+                </Typography>
+              </TableCell>
+              <TableCell align="right" width="20%">
+                <Typography>
+                  <Checkbox id="MyResponsobilities" />
+                  Show&nbsp;Issues with My&nbsp;Responsibility
+                </Typography>
+              </TableCell>
+            </TableHead>
+          </Table>
+        </TableContainer>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead className={styles.TableHead}>
+              <TableCell width={(100 * ColumnWidths[0]) / SumWidths + "%"}>
+                <Button
+                  onClick={() => {
+                    SortData("Name");
+                  }}
+                >
+                  <Typography variant="h6">Name</Typography>
+                  {Issues.Column == "Name" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
 
-            <TableCell width={100*ColumnWidths[3]/SumWidths + "%"}>
-              <Button
-                onClick={() => {
-                  SortData("CurrentStep");
-                }}
+              <TableCell width={(100 * ColumnWidths[1]) / SumWidths + "%"}>
+                <Button
+                  onClick={() => {
+                    SortData("Description");
+                  }}
+                >
+                  <Typography variant="h6">Description</Typography>
+                  {Issues.Column == "Description" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
+
+              <TableCell
+                width={(100 * ColumnWidths[2]) / SumWidths + "%"}
+                align="right"
               >
-                <Typography variant="h6">Current Step</Typography>
-                {Issues.Column == "CurrentStep" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
+                <Button
+                  onClick={() => {
+                    SortData("Importance");
+                  }}
+                >
+                  <Typography variant="h6" align="right">
+                    Importance
+                  </Typography>
+                  {Issues.Column == "Importance" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
 
-            <TableCell width={100*ColumnWidths[4]/SumWidths + "%"}>
-              <Button
-                onClick={() => {
-                  SortData("Progress");
-                }}
-              >
-                <Typography variant="h6">Progress</Typography>
-                {Issues.Column == "Progress" &&
-                  (Issues.Ascending ? (
-                    <ArrowDownwardIcon className={styles.SortingArrow} />
-                  ) : (
-                    <ArrowUpwardIcon className={styles.SortingArrow} />
-                  ))}
-              </Button>
-            </TableCell>
-          </TableHead>
-          <TableBody>
-            {Issues.Issues.map((Issue) => (
-              <TableRow key={Issue.ID} className={styles.TableRows}>
-                <TableCell className={styles.BodyTableCells}>{Issue.Name}</TableCell>
+              <TableCell width={(100 * ColumnWidths[3]) / SumWidths + "%"}>
+                <Button
+                  onClick={() => {
+                    SortData("CurrentStep");
+                  }}
+                >
+                  <Typography variant="h6">Current Step</Typography>
+                  {Issues.Column == "CurrentStep" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
 
-                <TableCell className={styles.BodyTableCells}>{Issue.Description}</TableCell>
+              <TableCell width={(100 * ColumnWidths[4]) / SumWidths + "%"}>
+                <Button
+                  onClick={() => {
+                    SortData("Progress");
+                  }}
+                >
+                  <Typography variant="h6">Progress</Typography>
+                  {Issues.Column == "Progress" &&
+                    (Issues.Ascending ? (
+                      <ArrowDownwardIcon className={styles.SortingArrow} />
+                    ) : (
+                      <ArrowUpwardIcon className={styles.SortingArrow} />
+                    ))}
+                </Button>
+              </TableCell>
+            </TableHead>
+            <TableBody>
+              {Issues.Issues.map((Issue) => (
+                <TableRow key={Issue.ID} className={styles.TableRows}>
+                  <TableCell className={styles.BodyTableCells}>
+                    {Issue.Name}
+                  </TableCell>
 
-                <TableCell align="center" className={styles.BodyTableCells}>{Issue.Importance}</TableCell>
+                  <TableCell className={styles.BodyTableCells}>
+                    {Issue.Description}
+                  </TableCell>
 
-                <TableCell align="center" className={styles.BodyTableCells}>{Issue.CurrentStep}</TableCell>
+                  <TableCell align="center" className={styles.BodyTableCells}>
+                    {Issue.Importance}
+                  </TableCell>
 
-                <TableCell className={styles.BodyTableCells}>
-                  {Issue.Closed
-                    ? "Closed On " + Issue.Closed.toString("yyyy-MM-dd")
-                    : "Active"}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TablePagination
+                  <TableCell align="center" className={styles.BodyTableCells}>
+                    {Issue.CurrentStep}
+                  </TableCell>
+
+                  <TableCell className={styles.BodyTableCells}>
+                    {Issue.Closed
+                      ? "Closed On " + Issue.Closed.toString("yyyy-MM-dd")
+                      : "Active"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TablePagination
                 rowsPerPageOptions={[10, 25, 50]}
                 count={Issues.Total}
                 rowsPerPage={Issues.PageSize}
                 page={Issues.PageNumber}
-                onChangePage={() => {setIssues(GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, Issues.PageNumber))}}
-                onChangeRowsPerPage={() => {setIssues(GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, Issues.PageNumber))}}
-            />
-        </TableFooter>
-        </Table>
-      </TableContainer></Container>
+                onChangePage={() => {
+                  setIssues(
+                    GetIssueData(
+                      Issues.Column,
+                      Issues.Ascending,
+                      Issues.PageSize,
+                      Issues.PageNumber
+                    )
+                  );
+                }}
+                onChangeRowsPerPage={() => {
+                  setIssues(
+                    GetIssueData(
+                      Issues.Column,
+                      Issues.Ascending,
+                      Issues.PageSize,
+                      Issues.PageNumber
+                    )
+                  );
+                }}
+              />
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Container>
     </React.Fragment>
   );
 };
@@ -217,12 +252,12 @@ export default IssueList;
 
 const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
   console.log(Column, Ascending ? "ASC" : "DESC");
-  if(document.getElementById("MyResponsobilities"))
-  console.log(
-    document.getElementById("MyResponsobilities").checked,
-    document.getElementById("MyIssues").checked,
-    document.getElementById("Closed").checked
-  );
+  if (document.getElementById("MyResponsobilities"))
+    console.log(
+      document.getElementById("MyResponsobilities").checked,
+      document.getElementById("MyIssues").checked,
+      document.getElementById("Closed").checked
+    );
 
   console.log(PageSize, PageNumber);
   return {
