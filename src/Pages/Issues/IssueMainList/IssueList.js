@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { makeStyles } from "@material-ui/core/styles";
+import LoadData from '../../../DataSources/viwIssues'
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const useStyles = makeStyles(() => ({
@@ -42,7 +43,29 @@ const useStyles = makeStyles(() => ({
 }));
 
 const IssueList = () => {
-  const [Issues, setIssues] = useState(GetIssueData("ID", true, 10, 0));
+  //const [Issues, setIssues] = useState(GetIssueData("ID", true, 10, 0));
+  const [Issues, setIssues] = useState({});
+  const [Loaded, setLoaded] = useState(false);
+
+  if(!Loaded)
+    LoadData({
+      Column: "id",
+      Ascending: 1,
+      PageSize: 25,
+      PageNumber: 0}, setIssues, setLoaded);
+
+    const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
+      LoadData({
+        Column: Column,
+        Ascending: Ascending,
+        PageSize: PageSize,
+        PageNumber: PageNumber}, setIssues, setLoaded);
+    }
+    
+  const SortData = (Column) => {
+    if (Issues.Column == Column) {GetIssueData(Column, !Issues.Ascending);
+    } else GetIssueData(Column, true);
+  };
   /*Issues JSON:
     {
         Column: //Column that is being sorted By
@@ -62,13 +85,9 @@ const IssueList = () => {
 
   const styles = useStyles();
 
-  const SortData = (Column) => {
-    if (Issues.Column == Column) {
-      setIssues(GetIssueData(Column, !Issues.Ascending));
-    } else setIssues(GetIssueData(Column, true));
-  };
-
-  return (
+  if(!Loaded) return(<div>Loading...</div>)
+  else 
+   return (
     <React.Fragment>
       <Container maxWidth="xl">
         <TableContainer component={Paper}>
@@ -188,25 +207,25 @@ const IssueList = () => {
             </TableHead>
             <TableBody>
               {Issues.Issues.map((Issue) => (
-                <TableRow key={Issue.ID} className={styles.TableRows}>
+                <TableRow key={Issue.id} className={styles.TableRows}>
                   <TableCell className={styles.BodyTableCells}>
-                    {Issue.Name}
+                    {Issue.name}
                   </TableCell>
 
                   <TableCell className={styles.BodyTableCells}>
-                    {Issue.Description}
+                    {Issue.description}
                   </TableCell>
 
                   <TableCell align="center" className={styles.BodyTableCells}>
-                    {Issue.Importance}
+                    {Issue.importance}
                   </TableCell>
 
                   <TableCell align="center" className={styles.BodyTableCells}>
-                    {Issue.CurrentStep}
+                    {/*Issue.CurrentStep*/}CurrentStep
                   </TableCell>
 
                   <TableCell className={styles.BodyTableCells}>
-                    {Issue.Closed
+                    {Issue.closed
                       ? "Closed On " + Issue.Closed.toString("yyyy-MM-dd")
                       : "Active"}
                   </TableCell>
@@ -220,24 +239,20 @@ const IssueList = () => {
                 rowsPerPage={Issues.PageSize}
                 page={Issues.PageNumber}
                 onChangePage={() => {
-                  setIssues(
                     GetIssueData(
                       Issues.Column,
                       Issues.Ascending,
                       Issues.PageSize,
                       Issues.PageNumber
-                    )
-                  );
+                    );
                 }}
                 onChangeRowsPerPage={() => {
-                  setIssues(
                     GetIssueData(
                       Issues.Column,
                       Issues.Ascending,
                       Issues.PageSize,
                       Issues.PageNumber
-                    )
-                  );
+                    );
                 }}
               />
             </TableFooter>
@@ -249,8 +264,11 @@ const IssueList = () => {
 };
 
 export default IssueList;
-
+/*
 const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
+
+  viwIssues
+  /*
   console.log(Column, Ascending ? "ASC" : "DESC");
   if (document.getElementById("MyResponsobilities"))
     console.log(
@@ -310,3 +328,4 @@ const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
     ],
   };
 };
+*/
