@@ -25,8 +25,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import "react-notifications-component/dist/theme.css";
+import Modal from '@material-ui/core/Modal';
+import NewIssueModal from './NewIssueModal';
+import {ImportanceByID} from './ImportanceMappings';
+
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -58,22 +62,24 @@ const useStyles = makeStyles((theme) => ({
   BodyTableCells: {
     paddingRight: "2rem",
   },
+  NewIssueModal: {
+  },
 }));
 
 const IssueList = () => {
   //const [Issues, setIssues] = useState(GetIssueData("ID", true, 10, 0));
   const [Issues, setIssues] = useState({});
   const [Loaded, setLoaded] = useState(false);
+  const [ModalIsOpen, setModalOpen] = useState(false);
+
 
   if(!Loaded){
-    
-
     LoadData({
       Column: "id",
       Ascending: 1,
       PageSize: 25,
-      PageNumber: 0}, setIssues, setLoaded);
-  }
+      PageNumber: 0}, setIssues, setLoaded);}
+  
 
     const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
       LoadData({
@@ -100,11 +106,20 @@ const IssueList = () => {
 */
 
   //Quick calculations to be able to adjust column widths
-  const ColumnWidths = [20, 30, 8, 10, 10];
+  const ColumnWidths = [20, 30, 8, 14, 10];
 
   const SumWidths = ColumnWidths.reduce((a, b) => a + b, 0);
 
   const styles = useStyles();
+
+  const handleOpen = () =>{
+    setModalOpen(true);
+  }
+
+  const handleClose = () =>{
+    setModalOpen(false);
+  }
+
 
   if(!Loaded) return(
     <React.Fragment><Container>Loading...
@@ -115,15 +130,23 @@ const IssueList = () => {
       
       <NavBar PageName="Issue Tracker">
         <div>
-          <ListSubheader inset>Example Buttons</ListSubheader>
-          <ListItem button>
+          <ListSubheader inset>Tasks</ListSubheader>
+          <ListItem button onClick={handleOpen}>
             <ListItemIcon>
-              <AssignmentIcon />
+              <AddBoxIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText primary="Create New Issue" />
           </ListItem>
         </div>
       </NavBar>
+      <Modal
+        open={ModalIsOpen}
+        onClose={handleClose}
+        
+      >
+        <NewIssueModal/>
+      </Modal>
+
       <Container maxWidth="xl" className={styles.content}>
         <TableContainer component={Paper}>
           <Table>
@@ -250,7 +273,7 @@ const IssueList = () => {
                   </TableCell>
 
                   <TableCell align="center" className={styles.BodyTableCells}>
-                    {Issue.importance}
+                    {ImportanceByID(Issue.importance).name}
                   </TableCell>
 
                   <TableCell align="center" className={styles.BodyTableCells}>

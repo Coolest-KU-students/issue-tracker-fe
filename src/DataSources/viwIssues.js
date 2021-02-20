@@ -14,5 +14,12 @@ const LoadData = (configuration, setIssues, setLoaded) => {
       });
     };
 
+export const CreateNewIssue = (newIssueData, setCompleted) => {
+    GlobalConfiguration();
+    axios.post("/Issues/", newIssueData).then(() => {setCompleted(true);})
+     
+
+}
+
 export default LoadData;
 
