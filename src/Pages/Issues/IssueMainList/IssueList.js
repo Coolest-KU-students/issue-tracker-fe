@@ -20,11 +20,29 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { makeStyles } from "@material-ui/core/styles";
 import LoadData from '../../../DataSources/viwIssues'
+import NavBar from "../../../GlobalFeatures/Navbar/Navbar";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import "react-notifications-component/dist/theme.css";
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
-
-const useStyles = makeStyles(() => ({
+const drawerWidth = 240;
+const useStyles = makeStyles((theme) => ({
   SortingArrow: {
     marginTop: "0",
+  },
+  content: {
+    marginTop: "5rem",
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "3rem",
+      width: "95%",
+    },
+    display: "inline-flex",
+    flexDirection: "column",
   },
   TableRows: {
     "&:nth-of-type(odd)": {
@@ -47,12 +65,15 @@ const IssueList = () => {
   const [Issues, setIssues] = useState({});
   const [Loaded, setLoaded] = useState(false);
 
-  if(!Loaded)
+  if(!Loaded){
+    
+
     LoadData({
       Column: "id",
       Ascending: 1,
       PageSize: 25,
       PageNumber: 0}, setIssues, setLoaded);
+  }
 
     const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
       LoadData({
@@ -85,11 +106,25 @@ const IssueList = () => {
 
   const styles = useStyles();
 
-  if(!Loaded) return(<div>Loading...</div>)
-  else 
+  if(!Loaded) return(
+    <React.Fragment><Container>Loading...
+    </Container></React.Fragment>)
+    else 
    return (
     <React.Fragment>
-      <Container maxWidth="xl">
+      
+      <NavBar PageName="Issue Tracker">
+        <div>
+          <ListSubheader inset>Example Buttons</ListSubheader>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reports" />
+          </ListItem>
+        </div>
+      </NavBar>
+      <Container maxWidth="xl" className={styles.content}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -116,8 +151,6 @@ const IssueList = () => {
               </TableCell>
             </TableHead>
           </Table>
-        </TableContainer>
-        <TableContainer component={Paper}>
           <Table>
             <TableHead className={styles.TableHead}>
               <TableCell width={(100 * ColumnWidths[0]) / SumWidths + "%"}>
@@ -221,7 +254,7 @@ const IssueList = () => {
                   </TableCell>
 
                   <TableCell align="center" className={styles.BodyTableCells}>
-                    {/*Issue.CurrentStep*/}CurrentStep
+                    {Issue.currentStep?Issue.currentStep:"Completed"}
                   </TableCell>
 
                   <TableCell className={styles.BodyTableCells}>
