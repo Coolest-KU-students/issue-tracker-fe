@@ -19,17 +19,17 @@ import React, { useState } from "react";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { makeStyles } from "@material-ui/core/styles";
-import LoadData from '../../../DataSources/viwIssues'
+import { LoadPaginatedData } from "../../../DataSources/viwIssues";
 import NavBar from "../../../GlobalFeatures/Navbar/Navbar";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBoxIcon from "@material-ui/icons/AddBox";
 import "react-notifications-component/dist/theme.css";
-import Modal from '@material-ui/core/Modal';
-import NewIssueModal from './NewIssueModal';
-import {ImportanceByID} from './ImportanceMappings';
+import Modal from "@material-ui/core/Modal";
+import NewIssueModal from "./NewIssueModal";
+import { ImportanceByID } from "./ImportanceMappings";
 
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
 const drawerWidth = 240;
@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme) => ({
   BodyTableCells: {
     paddingRight: "2rem",
   },
-  NewIssueModal: {
-  },
+  NewIssueModal: {},
 }));
 
 const IssueList = () => {
@@ -72,26 +71,57 @@ const IssueList = () => {
   const [Loaded, setLoaded] = useState(false);
   const [ModalIsOpen, setModalOpen] = useState(false);
 
+  if (!Loaded) {
+    LoadPaginatedData(
+      {
+        Column: "id",
+        Ascending: 1,
+        PageSize: 10,
+        PageNumber: 0,
+      },
+      setIssues,
+      setLoaded,
+      {
+        hideClosed: 0,
+        showCreatedByUser: 0,
+        showIssuesWhereUserIsResponsible: 0,
+      }
+    );
+  }
 
-  if(!Loaded){
-    LoadData({
-      Column: "id",
-      Ascending: 1,
-      PageSize: 25,
-      PageNumber: 0}, setIssues, setLoaded);}
-  
+  const GetFilteringBooleans = () => {
+    return {
+      hideClosed: document.getElementById("Closed").checked,
+      showCreatedByUser: document.getElementById("MyIssues").checked,
+      showIssuesWhereUserIsResponsible: document.getElementById(
+        "MyResponsobilities"
+      ).checked,
+    };
+  };
 
-    const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
-      LoadData({
+  const GetIssueData = (Column, Ascending, PageSize, PageNumber) => {
+    Column = Column ? Column : Issues.Column;
+    Ascending = typeof Ascending != undefined ? Ascending : Issues.Ascending;
+    PageSize = PageSize ? PageSize : Issues.PageSize;
+    PageNumber = typeof PageNumber != undefined ? PageNumber : 0;
+
+    LoadPaginatedData(
+      {
         Column: Column,
         Ascending: Ascending,
         PageSize: PageSize,
-        PageNumber: PageNumber}, setIssues, setLoaded);
-    }
-    
+        PageNumber: PageNumber,
+      },
+      setIssues,
+      setLoaded,
+      GetFilteringBooleans()
+    );
+  };
+
   const SortData = (Column) => {
-    if (Issues.Column == Column) {GetIssueData(Column, !Issues.Ascending);
-    } else GetIssueData(Column, true);
+    if (Issues.Column == Column) {
+      GetIssueData(Column, !Issues.Ascending, Issues.PageSize, 0);
+    } else GetIssueData(Column, true, Issues.PageSize, 0);
   };
   /*Issues JSON:
     {
@@ -112,211 +142,226 @@ const IssueList = () => {
 
   const styles = useStyles();
 
-  const handleOpen = () =>{
+  const handleOpen = () => {
     setModalOpen(true);
-  }
+  };
 
-  const handleClose = () =>{
+  const handleClose = () => {
     setModalOpen(false);
-  }
+  };
 
+  const handleCheckbox = () => {
+    GetIssueData();
+  };
 
-  if(!Loaded) return(
-    <React.Fragment><Container>Loading...
-    </Container></React.Fragment>)
-    else 
-   return (
-    <React.Fragment>
-      
-      <NavBar PageName="Issue Tracker">
-        <div>
-          <ListSubheader inset>Tasks</ListSubheader>
-          <ListItem button onClick={handleOpen}>
-            <ListItemIcon>
-              <AddBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Create New Issue" />
-          </ListItem>
-        </div>
-      </NavBar>
-      <Modal
-        open={ModalIsOpen}
-        onClose={handleClose}
-        
-      >
-        <NewIssueModal/>
-      </Modal>
+  const handlePaging = (event, number) => {
+    console.log(number);
+    GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, number);
+  };
 
-      <Container maxWidth="xl" className={styles.content}>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableCell>
-                <Typography>Common Filters:</Typography>
-              </TableCell>
-              <TableCell align="right" width="20%">
-                <Typography>
-                  <Checkbox id="Closed" checked="true" />
-                  Hide Closed
-                </Typography>
-              </TableCell>
-              <TableCell align="right" width="20%">
-                <Typography>
-                  <Checkbox id="MyIssues" />
-                  Show&nbsp;Issues Created&nbsp;By&nbsp;Me
-                </Typography>
-              </TableCell>
-              <TableCell align="right" width="20%">
-                <Typography>
-                  <Checkbox id="MyResponsobilities" />
-                  Show&nbsp;Issues with My&nbsp;Responsibility
-                </Typography>
-              </TableCell>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableHead className={styles.TableHead}>
-              <TableCell width={(100 * ColumnWidths[0]) / SumWidths + "%"}>
-                <Button
-                  onClick={() => {
-                    SortData("Name");
-                  }}
-                >
-                  <Typography variant="h6">Name</Typography>
-                  {Issues.Column == "Name" &&
-                    (Issues.Ascending ? (
-                      <ArrowDownwardIcon className={styles.SortingArrow} />
-                    ) : (
-                      <ArrowUpwardIcon className={styles.SortingArrow} />
-                    ))}
-                </Button>
-              </TableCell>
+  const handlePageSizing = (event) => {
+    GetIssueData(
+      Issues.Column,
+      Issues.Ascending,
+      event.target.value,
+      Issues.PageNumber
+    );
+  };
 
-              <TableCell width={(100 * ColumnWidths[1]) / SumWidths + "%"}>
-                <Button
-                  onClick={() => {
-                    SortData("Description");
-                  }}
-                >
-                  <Typography variant="h6">Description</Typography>
-                  {Issues.Column == "Description" &&
-                    (Issues.Ascending ? (
-                      <ArrowDownwardIcon className={styles.SortingArrow} />
-                    ) : (
-                      <ArrowUpwardIcon className={styles.SortingArrow} />
-                    ))}
-                </Button>
-              </TableCell>
+  if (!Loaded)
+    return (
+      <React.Fragment>
+        <Container>Loading...</Container>
+      </React.Fragment>
+    );
+  else
+    return (
+      <React.Fragment>
+        <NavBar PageName="Issue Tracker">
+          <div>
+            <ListSubheader inset>Tasks</ListSubheader>
+            <ListItem button onClick={handleOpen}>
+              <ListItemIcon>
+                <AddBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Create New Issue" />
+            </ListItem>
+          </div>
+        </NavBar>
+        <Modal open={ModalIsOpen} onClose={handleClose}>
+          <NewIssueModal />
+        </Modal>
 
-              <TableCell
-                width={(100 * ColumnWidths[2]) / SumWidths + "%"}
-                align="right"
-              >
-                <Button
-                  onClick={() => {
-                    SortData("Importance");
-                  }}
-                >
-                  <Typography variant="h6" align="right">
-                    Importance
+        <Container maxWidth="xl" className={styles.content}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableCell>
+                  <Typography>Common Filters:</Typography>
+                </TableCell>
+                <TableCell align="right" width="20%">
+                  <Typography>
+                    <Checkbox
+                      comment="This has to be here because otherwise the other checkbox doesn't work"
+                      style={{ display: "none" }}
+                    />
+                    <Checkbox id="Closed" onChange={handleCheckbox} />
+                    Hide Closed
                   </Typography>
-                  {Issues.Column == "Importance" &&
-                    (Issues.Ascending ? (
-                      <ArrowDownwardIcon className={styles.SortingArrow} />
-                    ) : (
-                      <ArrowUpwardIcon className={styles.SortingArrow} />
-                    ))}
-                </Button>
-              </TableCell>
+                </TableCell>
+                <TableCell align="right" width="20%">
+                  <Typography>
+                    <Checkbox id="MyIssues" onChange={handleCheckbox} />
+                    Show&nbsp;Issues Created&nbsp;By&nbsp;Me
+                  </Typography>
+                </TableCell>
+                <TableCell align="right" width="20%">
+                  <Typography>
+                    <Checkbox
+                      id="MyResponsobilities"
+                      onChange={handleCheckbox}
+                    />
+                    Show&nbsp;Issues with My&nbsp;Responsibility
+                  </Typography>
+                </TableCell>
+              </TableHead>
+            </Table>
+            <Table>
+              <TableHead className={styles.TableHead}>
+                <TableCell width={(100 * ColumnWidths[0]) / SumWidths + "%"}>
+                  <Button
+                    onClick={() => {
+                      SortData("name");
+                    }}
+                  >
+                    <Typography variant="h6">Name</Typography>
+                    {Issues.Column == "name" &&
+                      (Issues.Ascending ? (
+                        <ArrowDownwardIcon className={styles.SortingArrow} />
+                      ) : (
+                        <ArrowUpwardIcon className={styles.SortingArrow} />
+                      ))}
+                  </Button>
+                </TableCell>
 
-              <TableCell width={(100 * ColumnWidths[3]) / SumWidths + "%"}>
-                <Button
-                  onClick={() => {
-                    SortData("CurrentStep");
-                  }}
+                <TableCell width={(100 * ColumnWidths[1]) / SumWidths + "%"}>
+                  <Button
+                    onClick={() => {
+                      SortData("description");
+                    }}
+                  >
+                    <Typography variant="h6">Description</Typography>
+                    {Issues.Column == "description" &&
+                      (Issues.Ascending ? (
+                        <ArrowDownwardIcon className={styles.SortingArrow} />
+                      ) : (
+                        <ArrowUpwardIcon className={styles.SortingArrow} />
+                      ))}
+                  </Button>
+                </TableCell>
+
+                <TableCell
+                  width={(100 * ColumnWidths[2]) / SumWidths + "%"}
+                  align="right"
                 >
-                  <Typography variant="h6">Current Step</Typography>
-                  {Issues.Column == "CurrentStep" &&
-                    (Issues.Ascending ? (
-                      <ArrowDownwardIcon className={styles.SortingArrow} />
-                    ) : (
-                      <ArrowUpwardIcon className={styles.SortingArrow} />
-                    ))}
-                </Button>
-              </TableCell>
+                  <Button
+                    onClick={() => {
+                      SortData("importance");
+                    }}
+                  >
+                    <Typography variant="h6" align="right">
+                      Importance
+                    </Typography>
+                    {Issues.Column == "importance" &&
+                      (Issues.Ascending ? (
+                        <ArrowDownwardIcon className={styles.SortingArrow} />
+                      ) : (
+                        <ArrowUpwardIcon className={styles.SortingArrow} />
+                      ))}
+                  </Button>
+                </TableCell>
 
-              <TableCell width={(100 * ColumnWidths[4]) / SumWidths + "%"}>
-                <Button
-                  onClick={() => {
-                    SortData("Progress");
-                  }}
-                >
-                  <Typography variant="h6">Progress</Typography>
-                  {Issues.Column == "Progress" &&
-                    (Issues.Ascending ? (
-                      <ArrowDownwardIcon className={styles.SortingArrow} />
-                    ) : (
-                      <ArrowUpwardIcon className={styles.SortingArrow} />
-                    ))}
-                </Button>
-              </TableCell>
-            </TableHead>
-            <TableBody>
-              {Issues.Issues.map((Issue) => (
-                <TableRow key={Issue.id} className={styles.TableRows}>
-                  <TableCell className={styles.BodyTableCells}>
-                    {Issue.name}
-                  </TableCell>
+                <TableCell width={(100 * ColumnWidths[3]) / SumWidths + "%"}>
+                  <Button
+                    onClick={() => {
+                      SortData("currentStep");
+                    }}
+                  >
+                    <Typography variant="h6">Current Step</Typography>
+                    {Issues.Column == "currentStep" &&
+                      (Issues.Ascending ? (
+                        <ArrowDownwardIcon className={styles.SortingArrow} />
+                      ) : (
+                        <ArrowUpwardIcon className={styles.SortingArrow} />
+                      ))}
+                  </Button>
+                </TableCell>
 
-                  <TableCell className={styles.BodyTableCells}>
-                    {Issue.description}
-                  </TableCell>
+                <TableCell width={(100 * ColumnWidths[4]) / SumWidths + "%"}>
+                  <Button
+                    onClick={() => {
+                      SortData("closed");
+                    }}
+                  >
+                    <Typography variant="h6">Progress</Typography>
+                    {Issues.Column == "closed" &&
+                      (Issues.Ascending ? (
+                        <ArrowDownwardIcon className={styles.SortingArrow} />
+                      ) : (
+                        <ArrowUpwardIcon className={styles.SortingArrow} />
+                      ))}
+                  </Button>
+                </TableCell>
+              </TableHead>
+              <TableBody>
+                {Issues.Issues.map((Issue) => (
+                  <TableRow key={Issue.id} className={styles.TableRows}>
+                    <TableCell className={styles.BodyTableCells}>
+                      {Issue.name}
+                    </TableCell>
 
-                  <TableCell align="center" className={styles.BodyTableCells}>
-                    {ImportanceByID(Issue.importance).name}
-                  </TableCell>
+                    <TableCell className={styles.BodyTableCells}>
+                      {Issue.description}
+                    </TableCell>
 
-                  <TableCell align="center" className={styles.BodyTableCells}>
-                    {Issue.currentStep?Issue.currentStep:"Completed"}
-                  </TableCell>
+                    <TableCell align="center" className={styles.BodyTableCells}>
+                      {ImportanceByID(Issue.importance).name}
+                    </TableCell>
 
-                  <TableCell className={styles.BodyTableCells}>
-                    {Issue.closed
-                      ? "Closed On " + Issue.Closed.toString("yyyy-MM-dd")
-                      : "Active"}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 50]}
-                count={Issues.Total}
-                rowsPerPage={Issues.PageSize}
-                page={Issues.PageNumber}
-                onChangePage={() => {
-                    GetIssueData(
-                      Issues.Column,
-                      Issues.Ascending,
-                      Issues.PageSize,
-                      Issues.PageNumber
-                    );
-                }}
-                onChangeRowsPerPage={() => {
-                    GetIssueData(
-                      Issues.Column,
-                      Issues.Ascending,
-                      Issues.PageSize,
-                      Issues.PageNumber
-                    );
-                }}
-              />
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Container>
-    </React.Fragment>
-  );
+                    <TableCell align="center" className={styles.BodyTableCells}>
+                      {Issue.currentStep ? Issue.currentStep : "Completed"}
+                    </TableCell>
+
+                    <TableCell className={styles.BodyTableCells}>
+                      {Issue.closed ? (
+                        <div>
+                          Closed On <br />{" "}
+                          {Issue.closed
+                            .toString()
+                            .replace("T", String.fromCharCode(160))}
+                        </div>
+                      ) : (
+                        "Active"
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 50]}
+                  count={Issues.Total}
+                  rowsPerPage={Issues.PageSize}
+                  page={Issues.PageNumber}
+                  onChangePage={handlePaging}
+                  onChangeRowsPerPage={handlePageSizing}
+                />
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        </Container>
+      </React.Fragment>
+    );
 };
 
 export default IssueList;
