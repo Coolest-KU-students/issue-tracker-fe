@@ -170,7 +170,7 @@ export default function Navbar(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="absolute"
+        position="fixed"
         className={open ? classes.appBarShift : classes.appBar}
       >
         <Toolbar className={classes.toolbar}>
