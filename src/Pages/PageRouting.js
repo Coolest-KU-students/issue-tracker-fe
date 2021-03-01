@@ -5,25 +5,24 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { Button, Typography } from "@material-ui/core";
+import Login from "./Login/Login.js";
+import Authenticate, { CheckJWTIsValid } from "./../DataSources/Authentication";
+
+//import IssueList from "./Pages/Issues/IssueMainList/IssueList";
 const GetAuthentication = () => {
-  return false;
+  return CheckJWTIsValid();
 };
 
 const PageRouting = () => {
   const [IsAuthenticated, setAuthenticated] = useState(GetAuthentication());
 
+  const AuthenticateUser = (credentials) => {
+    Authenticate(credentials, setAuthenticated);
+  };
+
   return (
     <Router>
-      {!IsAuthenticated && (
-        <Button
-          onClick={() => {
-            setAuthenticated(true);
-          }}
-        >
-          <Typography>Click</Typography>
-        </Button>
-      )}
+      {!IsAuthenticated && <Login setAuthenticated={AuthenticateUser} />}
       {IsAuthenticated && (
         <Switch>
           <Route path="/">
