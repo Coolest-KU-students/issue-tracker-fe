@@ -6,7 +6,7 @@ import GlobalConfiguration, {
 
 const Authenticate = (credentials, setAuthenticated) => {
   GlobalConfiguration();
-  axios.post("/auth/", credentials).then((response) => {
+  axios.post("/login", credentials).then((response) => {
     StoreJWTToken(response.jwt);
     setAuthenticated(true);
   });
@@ -15,7 +15,7 @@ const Authenticate = (credentials, setAuthenticated) => {
 export const CheckJWTIsValid = () => {
   GlobalConfiguration();
   GetJWTToken() &&
-    axios.get("/auth/").then((response) => {
+    axios.get("/auth").then((response) => {
       return response.Valid
         ? () => {
             StoreJWTToken(response.jwt);
