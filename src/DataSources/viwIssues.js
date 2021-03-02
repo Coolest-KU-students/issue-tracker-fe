@@ -3,7 +3,7 @@ import GlobalConfiguration from "./GlobalConfiguration";
 
 const LoadData = (configuration, setIssues, setLoaded) => {
   GlobalConfiguration();
-  axios.get("/Issues/").then((response) => {
+  axios.get("/issues/").then((response) => {
     setIssues({
       ...configuration,
       Total: response.data.length,
@@ -22,7 +22,7 @@ export const LoadPaginatedData = (
   GlobalConfiguration();
 
   axios
-    .get("/Issues/data", {
+    .get("/issues/data", {
       params: {
         orderBy: configuration.Column,
         ascending: configuration.Ascending,
@@ -49,7 +49,7 @@ export const LoadPaginatedData = (
 
 export const CreateNewIssue = (newIssueData, setCompleted) => {
   GlobalConfiguration();
-  axios.post("/Issues/", newIssueData).then(() => {
+  axios.post("/issues/", newIssueData).then(() => {
     setCompleted(true);
   });
 };

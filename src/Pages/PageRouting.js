@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Login from "./Login/Login.js";
 import Authenticate, { CheckJWTIsValid } from "./../DataSources/Authentication";
+import IssueList from "../Pages/Issues/IssueMainList/IssueList"
 
 //import IssueList from "./Pages/Issues/IssueMainList/IssueList";
 const GetAuthentication = () => {
@@ -26,7 +27,7 @@ const PageRouting = () => {
       {IsAuthenticated && (
         <Switch>
           <Route path="/">
-            <div>Congrats, You broke in!</div>
+            <IssueList/>
           </Route>
           <Redirect exact to="/" />
         </Switch>

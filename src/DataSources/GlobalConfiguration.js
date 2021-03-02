@@ -6,6 +6,7 @@ const GlobalConfiguration = () => {
 };
 
 export const StoreJWTToken = (Token) => {
+  console.log(Token);
   localStorage.setItem("authToken", Token);
 };
 
