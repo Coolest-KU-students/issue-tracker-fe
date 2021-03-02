@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
 export default function LogIn(props) {
+
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
@@ -115,12 +115,14 @@ export default function LogIn(props) {
                         Notification(
                           "Logging In",
                           "Please wait while our system processes the request",
-                          "warning"
+                          "warning",
+                          1000
                         );
                         setAuthenticated({
                           login: email,
                           password: document.getElementById("password").value,
                         });
+
                       }
                     : Notification("", "Please Fill In Credentials", "danger")
                 );

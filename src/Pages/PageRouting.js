@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,33 +6,56 @@ import {
   Redirect,
 } from "react-router-dom";
 import Login from "./Login/Login.js";
-import Authenticate, { CheckJWTIsValid } from "./../DataSources/Authentication";
+import Authenticate, { CheckJWTIsValid, CleanJWTToken } from "./../DataSources/Authentication";
 import IssueList from "../Pages/Issues/IssueMainList/IssueList"
 
 //import IssueList from "./Pages/Issues/IssueMainList/IssueList";
-const GetAuthentication = () => {
-  return CheckJWTIsValid();
-};
+
 
 const PageRouting = () => {
-  const [IsAuthenticated, setAuthenticated] = useState(GetAuthentication());
+  
+  const [IsAuthenticated, setAuthenticated] = useState(null);
+  const [IsLoaded, setLoaded] = useState(null);
+  useEffect(() =>{
+      CheckJWTIsValid(SetLoadedandAuthenticated);
+  }, [])
+
+
+  const SetLoadedandAuthenticated = (auth) =>{
+    setAuthenticated(auth);
+    setLoaded(true);
+  }
 
   const AuthenticateUser = (credentials) => {
     Authenticate(credentials, setAuthenticated);
+    SetWhiteBackground();
   };
 
-  return (
-    <Router>
+  const SetWhiteBackground=()=>{
+    document.body.style =  "background: white"
+  }
+
+  const LogOut = () =>{
+    console.log('test');
+    CleanJWTToken();
+    setAuthenticated(false);
+  }
+  
+  return (<React.Fragment>
+    {IsLoaded && <Router>
       {!IsAuthenticated && <Login setAuthenticated={AuthenticateUser} />}
-      {IsAuthenticated && (
+      {IsAuthenticated &&  (
+        
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <IssueList/>
           </Route>
+          <Route exact path="/logout" render={() => {LogOut(); return (<Redirect exact to="/" />);}} />
           <Redirect exact to="/" />
         </Switch>
       )}
-    </Router>
+    </Router> }
+    </React.Fragment>
   );
 };
 

@@ -8,6 +8,7 @@ import HomeWorkIcon from "@material-ui/icons/HomeWork";
 import ListAltRoundedIcon from "@material-ui/icons/ListAltRounded";
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Link } from "react-router-dom";
 
 export default function NavigationButtons() {
   return (
@@ -31,18 +32,22 @@ export default function NavigationButtons() {
         </ListItemIcon>
         <ListItemText primary="Users" />
       </ListItem>
+    
       <ListItem button>
         <ListItemIcon>
           <LibraryAddCheckIcon />
         </ListItemIcon>
         <ListItemText primary="Step Register" />
       </ListItem>
+      <Link to="/logout">
       <ListItem button>
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary="Log Out" />
+        <ListItemText primary="Log Out">
+        </ListItemText>
       </ListItem>
+        </Link>
     </div>
   );
 }

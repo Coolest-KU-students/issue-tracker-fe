@@ -12,17 +12,22 @@ const Authenticate = (credentials, setAuthenticated) => {
   });
 };
 
-export const CheckJWTIsValid = () => {
+export const CleanJWTToken = () =>{
+  StoreJWTToken("RANDOM STRING BLAH BLAH BLAH");
+}
+
+export const CheckJWTIsValid = (setAuthenticated) => {
   GlobalConfiguration();
-  GetJWTToken() &&
+
+  if(GetJWTToken()) {
     axios.get("/auth").then((response) => {
-      return response.Valid
-        ? () => {
-            StoreJWTToken(response.data.token);
-            return true;
-          }
-        : false;
+      StoreJWTToken(response.data.token);
+      console.log(response.data.token);
+      setAuthenticated(true);
+      return;
     });
+    setAuthenticated(false);}
+  else setAuthenticated(false);
 };
 
 export default Authenticate;
