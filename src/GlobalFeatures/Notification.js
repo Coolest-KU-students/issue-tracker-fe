@@ -21,3 +21,7 @@ export function ClearNotification(id) {
   console.log(id);
   store.removeNotification(id);
 }
+
+export function ClearAllNotifications(){
+  store.removeAllNotifications();
+}

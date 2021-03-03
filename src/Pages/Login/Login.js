@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container";
 import { colors } from "@material-ui/core";
 //import { useDispatch } from "react-redux";
 import Notification from "../../GlobalFeatures/Notification";
-import { ClearNotification } from "../../GlobalFeatures/Notification";
+import {  ClearAllNotifications } from "../../GlobalFeatures/Notification";
 //const BackgroundColor = colors.grey[50];
 import PropTypes from "prop-types";
 
@@ -54,12 +54,40 @@ export default function LogIn(props) {
 
   const setAuthenticated = props.setAuthenticated;
 
-  const [CurrentNotification, setNotification] = useState(0);
 
   //  const dispatch = useDispatch();
 
   document.body.style =
     "background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);";
+
+  const handleSubmit = (e) =>{
+    ClearAllNotifications();
+    e.preventDefault();
+    
+    var credentialsExist = (!!email  && (!!document.getElementById("password").value));
+    console.log(credentialsExist);
+     credentialsExist ?LoggingInSuccessfully()
+        : Notification("", "Please Fill In Credentials", "danger");
+  }
+
+  const LoggingInSuccessfully=()=>{
+    
+    Notification(
+      "Logging In",
+      "Please wait while our system processes the request",
+      "warning"
+    );
+    setAuthenticated({
+      login: email,
+      password: document.getElementById("password").value,
+    });
+  }
+
+ /* handelKeyPress = (e) =>{
+    if(e.keyCode == 13){
+      handleSubmit();
+    }
+  }*/
 
   return (
     <div className={classes.page}>
@@ -103,30 +131,12 @@ export default function LogIn(props) {
               label="Remember me"
             />
             <Button
+              type="submit"
               fullWidth
               variant="contained"
               color="secondary"
               className={classes.submit}
-              onClick={() => {
-                ClearNotification(CurrentNotification);
-                setNotification(
-                  email && document.getElementById("password").value
-                    ? () => {
-                        Notification(
-                          "Logging In",
-                          "Please wait while our system processes the request",
-                          "warning",
-                          1000
-                        );
-                        setAuthenticated({
-                          login: email,
-                          password: document.getElementById("password").value,
-                        });
-
-                      }
-                    : Notification("", "Please Fill In Credentials", "danger")
-                );
-              }}
+              onClick={handleSubmit}
             >
               Log In
             </Button>

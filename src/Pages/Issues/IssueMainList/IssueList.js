@@ -151,7 +151,7 @@ const IssueList = () => {
   };
 
   const handleCheckbox = () => {
-    GetIssueData();
+    GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, Issues.PageNumber);
   };
 
   const handlePaging = (event, number) => {
@@ -349,7 +349,7 @@ const IssueList = () => {
               </TableBody>
               <TableFooter>
                 <TablePagination
-                  rowsPerPageOptions={[10, 25, 50]}
+                  rowsPerPageOptions={[5, 10, 25]}
                   count={Issues.Total}
                   rowsPerPage={Issues.PageSize}
                   page={Issues.PageNumber}
