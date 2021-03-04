@@ -16,6 +16,7 @@ import { colors } from "@material-ui/core";
 import Notification from "../../GlobalFeatures/Notification";
 import { ClearNotification } from "../../GlobalFeatures/Notification";
 //const BackgroundColor = colors.grey[50];
+import PropTypes from "prop-types";
 
 //TODO: Get The Logo
 function Image() {
@@ -45,11 +46,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+export default function LogIn(props) {
 
-export default function LogIn() {
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
+
+  const setAuthenticated = props.setAuthenticated;
 
   const [CurrentNotification, setNotification] = useState(0);
 
@@ -104,22 +107,26 @@ export default function LogIn() {
               variant="contained"
               color="secondary"
               className={classes.submit}
-              onClick={
-                () => {
-                  ClearNotification(CurrentNotification);
-                  setNotification(
-                    email && document.getElementById("password").value
-                      ? Notification(
+              onClick={() => {
+                ClearNotification(CurrentNotification);
+                setNotification(
+                  email && document.getElementById("password").value
+                    ? () => {
+                        Notification(
                           "Logging In",
                           "Please wait while our system processes the request",
-                          "warning"
-                        )
-                      : Notification("", "Please Fill In Credentials", "danger")
-                  );
-                }
-                /* HasAgreedToTerms() ? LogInUser(email, dispatch) : SetAgreement(false);
-                }*/
-              }
+                          "warning",
+                          1000
+                        );
+                        setAuthenticated({
+                          login: email,
+                          password: document.getElementById("password").value,
+                        });
+
+                      }
+                    : Notification("", "Please Fill In Credentials", "danger")
+                );
+              }}
             >
               Log In
             </Button>
@@ -149,3 +156,7 @@ export default function LogIn() {
     </div>
   );
 }
+
+LogIn.propTypes = {
+  setAuthenticated: PropTypes.func,
+};

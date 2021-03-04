@@ -164,6 +164,8 @@ export default function Navbar(props) {
   };
   //const fixedHeightPaper = classes.paper;
 
+  document.body.style = "background: white"
+
   const NavbarHeight = "45px";
 
   return (
