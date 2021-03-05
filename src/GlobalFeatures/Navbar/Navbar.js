@@ -33,11 +33,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
 
-  Menu: {
-    color: "Secondary",
-    backgroundColor: "Secondary",
-  },
-
   root: {
     flexGrow: 1,
   },
