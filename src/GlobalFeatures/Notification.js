@@ -18,6 +18,9 @@ export default function Notification(title, message, type, duration) {
 }
 
 export function ClearNotification(id) {
-  console.log(id);
   store.removeNotification(id);
+}
+
+export function ClearAllNotifications() {
+  store.removeAllNotifications();
 }

@@ -32,22 +32,19 @@ export default function NavigationButtons() {
         </ListItemIcon>
         <ListItemText primary="Users" />
       </ListItem>
-    
+
       <ListItem button>
         <ListItemIcon>
           <LibraryAddCheckIcon />
         </ListItemIcon>
         <ListItemText primary="Step Register" />
       </ListItem>
-      <Link to="/logout">
-      <ListItem button>
+      <ListItem component={Link} to="/logout" button>
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary="Log Out">
-        </ListItemText>
+        <ListItemText primary="Log Out"></ListItemText>
       </ListItem>
-        </Link>
     </div>
   );
 }
