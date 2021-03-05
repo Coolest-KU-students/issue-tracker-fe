@@ -31,6 +31,8 @@ import Modal from "@material-ui/core/Modal";
 import NewIssueModal from "./NewIssueModal";
 import { ImportanceByID } from "./ImportanceMappings";
 
+//TODO: update loading screen (atm shows "Loading...")
+
 //import TableSortLabel from "@material-ui/core/TableSortLabel";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -50,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
   },
   TableRows: {
     "&:nth-of-type(odd)": {
-      backgroundColor: "#eaf0ea",
+      backgroundColor: "#efeffa",
     },
     "&:nth-of-type(even)": {
-      backgroundColor: "#eaeaf0",
+      backgroundColor: "#cadafa",
     },
   },
   TableHead: {
@@ -151,11 +153,15 @@ const IssueList = () => {
   };
 
   const handleCheckbox = () => {
-    GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, Issues.PageNumber);
+    GetIssueData(
+      Issues.Column,
+      Issues.Ascending,
+      Issues.PageSize,
+      Issues.PageNumber
+    );
   };
 
   const handlePaging = (event, number) => {
-    console.log(number);
     GetIssueData(Issues.Column, Issues.Ascending, Issues.PageSize, number);
   };
 

@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container";
 import { colors } from "@material-ui/core";
 //import { useDispatch } from "react-redux";
 import Notification from "../../GlobalFeatures/Notification";
-import {  ClearAllNotifications } from "../../GlobalFeatures/Notification";
+import { ClearAllNotifications } from "../../GlobalFeatures/Notification";
 //const BackgroundColor = colors.grey[50];
 import PropTypes from "prop-types";
 
@@ -46,32 +46,31 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-export default function LogIn(props) {
 
+export default function LogIn(props) {
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
 
   const setAuthenticated = props.setAuthenticated;
 
-
   //  const dispatch = useDispatch();
 
   document.body.style =
     "background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);";
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     ClearAllNotifications();
     e.preventDefault();
-    
-    var credentialsExist = (!!email  && (!!document.getElementById("password").value));
-    console.log(credentialsExist);
-     credentialsExist ?LoggingInSuccessfully()
-        : Notification("", "Please Fill In Credentials", "danger");
-  }
 
-  const LoggingInSuccessfully=()=>{
-    
+    var credentialsExist =
+      !!email && !!document.getElementById("password").value;
+    credentialsExist
+      ? LoggingInSuccessfully()
+      : Notification("", "Please Fill In Credentials", "danger");
+  };
+
+  const LoggingInSuccessfully = () => {
     Notification(
       "Logging In",
       "Please wait while our system processes the request",
@@ -81,13 +80,7 @@ export default function LogIn(props) {
       login: email,
       password: document.getElementById("password").value,
     });
-  }
-
- /* handelKeyPress = (e) =>{
-    if(e.keyCode == 13){
-      handleSubmit();
-    }
-  }*/
+  };
 
   return (
     <div className={classes.page}>

@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,55 +6,62 @@ import {
   Redirect,
 } from "react-router-dom";
 import Login from "./Login/Login.js";
-import Authenticate, { CheckJWTIsValid, CleanJWTToken } from "./../DataSources/Authentication";
+import Authenticate, {
+  CheckJWTIsValid,
+  CleanJWTToken,
+} from "./../DataSources/Authentication";
 import IssueList from "../Pages/Issues/IssueMainList/IssueList";
 
 //import IssueList from "./Pages/Issues/IssueMainList/IssueList";
 
-
 const PageRouting = () => {
-  
   const [IsAuthenticated, setAuthenticated] = useState(null);
   const [IsLoaded, setLoaded] = useState(false);
-  useEffect(() =>{
-      CheckJWTIsValid(SetLoadedAndAuthenticated);
-  }, [])
+  useEffect(() => {
+    CheckJWTIsValid(SetLoadedAndAuthenticated);
+  }, []);
 
-
-  const SetLoadedAndAuthenticated = (auth) =>{
+  const SetLoadedAndAuthenticated = (auth) => {
     setAuthenticated(auth);
     setLoaded(true);
-  }
+  };
 
   const AuthenticateUser = (credentials) => {
     Authenticate(credentials, setAuthenticated);
   };
 
-  const LogOut = () =>{
+  const LogOut = () => {
     CleanJWTToken();
     setAuthenticated(false);
-  }
-  
-  if(IsLoaded)
-  return (
-    <React.Fragment>
-      <Router>
-      {IsAuthenticated &&  (
-        
-        <Switch>
-          <Route exact path="/">
-            <IssueList/>
-          </Route>
-          <Route exact path="/logout" render={() => {LogOut(); return (<Redirect exact to="/" />);}} />
-          <Redirect exact to="/" />
-        </Switch>
-      )}
-      {(IsAuthenticated === false) && <Login setAuthenticated={AuthenticateUser} />}
-      
-    </Router> 
-    </React.Fragment>
-  )
-  else return (<div />)
+  };
+
+  if (IsLoaded)
+    return (
+      <React.Fragment>
+        <Router>
+          {IsAuthenticated && (
+            <Switch>
+              <Route exact path="/">
+                <IssueList />
+              </Route>
+              <Route
+                exact
+                path="/logout"
+                render={() => {
+                  LogOut();
+                  return <Redirect exact to="/" />;
+                }}
+              />
+              <Redirect exact to="/" />
+            </Switch>
+          )}
+          {IsAuthenticated === false && (
+            <Login setAuthenticated={AuthenticateUser} />
+          )}
+        </Router>
+      </React.Fragment>
+    );
+  else return <div />;
 };
 
 /* Temporary */
