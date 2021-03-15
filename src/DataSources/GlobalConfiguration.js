@@ -1,16 +1,16 @@
-import axios from "axios";
+import axios from 'axios';
 
 const GlobalConfiguration = () => {
-  axios.defaults.baseURL = "http://localhost:8080/api/";
-  axios.defaults.headers.common["Authorization"] = "Bearer " + GetJWTToken();
+    axios.defaults.baseURL = 'http://localhost:8080/api/';
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + GetJWTToken();
 };
 
 export const StoreJWTToken = (Token) => {
-  localStorage.setItem("authToken", Token);
+    localStorage.setItem('authToken', Token);
 };
 
 export const GetJWTToken = () => {
-  return localStorage.getItem("authToken");
+    return localStorage.getItem('authToken');
 };
 
 export default GlobalConfiguration;
