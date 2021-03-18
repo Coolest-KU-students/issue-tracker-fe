@@ -20,7 +20,7 @@ export default function NavigationButtons() {
                 </ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/" button>
                 <ListItemIcon>
                     <ListAltRoundedIcon />
                 </ListItemIcon>
@@ -32,18 +32,17 @@ export default function NavigationButtons() {
                 </ListItemIcon>
                 <ListItemText primary="Users" />
             </ListItem>
-
-            <ListItem button>
+            <ListItem component={Link} to="/steps" button>
                 <ListItemIcon>
                     <LibraryAddCheckIcon />
                 </ListItemIcon>
-                <ListItemText primary="Step Register" />
+                <ListItemText primary="Step Configuration" />
             </ListItem>
             <ListItem component={Link} to="/logout" button>
                 <ListItemIcon>
                     <ExitToAppIcon />
                 </ListItemIcon>
-                <ListItemText primary="Log Out"></ListItemText>
+                <ListItemText primary="Log Out" />
             </ListItem>
         </div>
     );

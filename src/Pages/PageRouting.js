@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './Login/Login.js';
 import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/Authentication';
 import IssueList from '../Pages/Issues/IssueMainList/IssueList';
+import StepList from './Steps/StepList.js';
 
 //import IssueList from "./Pages/Issues/IssueMainList/IssueList";
 
@@ -35,6 +36,9 @@ const PageRouting = () => {
                         <Switch>
                             <Route exact path="/">
                                 <IssueList />
+                            </Route>
+                            <Route exact path="/steps">
+                                <StepList />
                             </Route>
                             <Route
                                 exact
