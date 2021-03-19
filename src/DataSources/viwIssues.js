@@ -1,8 +1,6 @@
 import axios from 'axios';
-import GlobalConfiguration from './GlobalConfiguration';
 
 const LoadData = (configuration, setIssues, setLoaded) => {
-    GlobalConfiguration();
     axios.get('/issues/').then((response) => {
         setIssues({
             ...configuration,
@@ -14,8 +12,6 @@ const LoadData = (configuration, setIssues, setLoaded) => {
 };
 
 export const LoadPaginatedData = (configuration, setIssues, setLoaded, filtering) => {
-    GlobalConfiguration();
-
     axios
         .get('/issues/data', {
             params: {
@@ -42,7 +38,6 @@ export const LoadPaginatedData = (configuration, setIssues, setLoaded, filtering
 };
 
 export const CreateNewIssue = (newIssueData, setCompleted) => {
-    GlobalConfiguration();
     axios.post('/issues/', newIssueData).then(() => {
         setCompleted(true);
     });

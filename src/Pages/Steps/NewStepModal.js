@@ -4,7 +4,6 @@ import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { CreateNewStep } from '../../DataSources/Steps';
-import Notification from '../../GlobalFeatures/Notification';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -23,35 +22,33 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NewStepModal() {
+export default function NewStepModal({ GetStepData, handleClose }) {
     const styles = useStyles();
     const [savingInProgress, setSavingProgess] = useState(false);
     const [newStepName, setNewStepName] = useState('');
-    const [reqError, setReqError] = useState('');
 
-    //TODO: This is ugly:
-    useEffect(() => {
-        if (reqError !== '') {
-            setSavingFinished();
-            Notification('', reqError.toString(), 'info', 1000);
-            setReqError('');
-        }
-    }, [reqError]);
+    const errorCallback = () => {
+        setSavingProgess(false);
+        document.getElementById('field').value = '';
+    };
 
     const handleLoad = () => {
         setSavingProgess(true);
-        CreateNewStep(newStepName, setSavingFinished, setReqError);
+        CreateNewStep(newStepName, GetStepData, setSavingFinished, errorCallback);
     };
 
-    //TODO: When finished, update the step list
-    //TODO: Close modal after new step is created?
     const setSavingFinished = () => {
         setSavingProgess(false);
+        handleClose();
     };
 
-    //TODO: newStepName is e.target.value as string + : (ex. 'New step name:')
     const setName = (e) => {
-        setNewStepName(e.target.value);
+        let regexCheck = /^\s+.*$/;
+        if (regexCheck.test(e.target.value)) {
+            e.target.value = '';
+        } else {
+            setNewStepName(e.target.value);
+        }
     };
 
     return (
@@ -61,6 +58,7 @@ export default function NewStepModal() {
                     Create new step:
                 </Typography>
                 <TextField
+                    id="field"
                     label="Step name"
                     autoFocus
                     style={{ margin: 8 }}
@@ -81,6 +79,7 @@ export default function NewStepModal() {
                         className={styles.button}
                         startIcon={savingInProgress ? <CircularProgress size="20px" color="secondary" /> : <SaveIcon />}
                         onClick={handleLoad}
+                        disabled={!newStepName}
                     >
                         {savingInProgress ? 'Saving...' : 'Save'}
                     </Button>

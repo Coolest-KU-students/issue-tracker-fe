@@ -1,21 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import React from 'react';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DragIndicatorOutlinedIcon from '@material-ui/icons/DragIndicatorOutlined';
 import { DeleteStep } from '../../DataSources/Steps';
-import Notification from '../../GlobalFeatures/Notification';
 
 const useStyles = makeStyles((theme) => ({
     cardElement: {
-        border: '1px dashed gray',
+        '&:nth-of-type(odd)': {
+            border: '1px solid blue',
+        },
+        '&:nth-of-type(even)': {
+            border: '1px solid #00218e',
+        },
         padding: '0.5rem 1rem',
         marginBottom: '.5rem',
-        backgroundColor: 'white',
+        backgroundColor: 'inherit',
         cursor: 'move',
         paddingLeft: 0,
         height: '3.2rem',
+        '&:hover': {
+            backgroundColor: '#DEECFF',
+        },
     },
     deleteButton: {
         float: 'right',
@@ -29,21 +36,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Card = ({ id, text, index, moveCard, draggable, setStepDeleted }) => {
+export const Card = ({ id, text, index, moveCard, draggable, GetStepData }) => {
     const styles = useStyles();
     const ref = useRef(null);
-    const [reqError, setReqError] = useState('');
-
-    //TODO: This is ugly:
-    useEffect(() => {
-        if (reqError !== '') {
-            Notification('', reqError.toString(), 'danger', 3000);
-            setReqError('');
-        }
-    }, [reqError]);
 
     const handleDeleteButtonClick = () => {
-        DeleteStep(id, setReqError, setStepDeleted);
+        DeleteStep(id, GetStepData);
     };
 
     const [{ handlerId }, drop] = useDrop({
@@ -108,7 +106,7 @@ export const Card = ({ id, text, index, moveCard, draggable, setStepDeleted }) =
             <div ref={ref} className={styles.cardElement} style={{ opacity }} data-handler-id={handlerId}>
                 <Typography style={{ textAlign: 'Left' }} variant="h6">
                     <DragIndicatorOutlinedIcon style={{ paddingTop: '0.5rem' }} />
-                    {text}
+                    {index + 1}. {text}
                 </Typography>
             </div>
         );
@@ -118,11 +116,12 @@ export const Card = ({ id, text, index, moveCard, draggable, setStepDeleted }) =
                 className={styles.cardElement}
                 style={{
                     cursor: 'default',
+                    backgroundColor: 'inherit',
                 }}
                 data-handler-id={handlerId}
             >
                 <Typography style={{ textAlign: 'Left', paddingLeft: '1.5rem' }} variant="h6">
-                    {text}
+                    {index + 1}. {text}
                     <Button className={styles.deleteButton} onClick={handleDeleteButtonClick}>
                         <DeleteIcon />
                     </Button>

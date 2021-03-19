@@ -17,7 +17,7 @@ import update from 'immutability-helper';
 import { Card } from './Card';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Notification from '../../GlobalFeatures/Notification';
-import LoadData from '../../DataSources/Steps';
+import LoadData, { UpdateStepList } from '../../DataSources/Steps';
 import NewStepModal from './NewStepModal';
 
 const drawerWidth = 240;
@@ -57,13 +57,10 @@ const StepList = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [steps, setSteps] = useState([]);
     const [ModalIsOpen, setModalOpen] = useState(false);
-    const [stepDeleted, setStepDeleted] = useState(false);
 
-    //TODO: Update step list after creating new step
     useEffect(() => {
         GetStepData();
-        setStepDeleted(false);
-    }, [stepDeleted]);
+    }, []);
 
     const handleOpen = () => {
         setModalOpen(true);
@@ -87,8 +84,18 @@ const StepList = () => {
             const [cards, setCards] = useState(props.data);
             const styles = useStyles();
 
+            const successfulSave = () => {
+                LoadData(setSteps, () => {
+                    setIsEditMode(false);
+                });
+            };
+
             const handleSaveStepList = () => {
-                console.log(cards);
+                let stepList = cards;
+                stepList.forEach((step, index) => {
+                    step.sortOrder = index;
+                });
+                UpdateStepList(stepList, successfulSave);
             };
 
             const moveCard = useCallback(
@@ -115,7 +122,7 @@ const StepList = () => {
                         text={card.name}
                         moveCard={moveCard}
                         draggable={isEditMode}
-                        setStepDeleted={setStepDeleted}
+                        GetStepData={GetStepData}
                     />
                 );
             };
@@ -160,7 +167,7 @@ const StepList = () => {
                 </div>
             </Navbar>
             <Modal open={ModalIsOpen} onClose={handleClose}>
-                <NewStepModal />
+                <NewStepModal GetStepData={GetStepData} handleClose={handleClose} />
             </Modal>
 
             <Container maxWidth="xl" className={styles.content}>

@@ -1,40 +1,50 @@
 import axios from 'axios';
-import { RESPONSE_STATUS } from '../GlobalFeatures/Constants';
-import GlobalConfiguration from './GlobalConfiguration';
+import Notification from '../GlobalFeatures/Notification';
+import { RESPONSE_STATUS } from './GlobalConfiguration';
 
-const LoadData = (setSteps) => {
-    GlobalConfiguration();
-    axios.get('steps/').then((response) => {
+const LoadData = (setSteps, callback) => {
+    axios.get('/steps/').then((response) => {
         setSteps(response.data);
+        if (typeof callback == typeof (() => {})) {
+            callback();
+        }
     });
 };
 
-export const DeleteStep = (id, setReqError, setStepDeleted) => {
-    GlobalConfiguration();
+export const DeleteStep = (id, GetStepData) => {
     axios
-        .delete('steps/' + id)
+        .delete('/steps/' + id)
         .then(() => {
-            setStepDeleted(true);
+            GetStepData();
         })
         .catch((error) => {
             if (error.response.status === RESPONSE_STATUS.FORBIDDEN) {
-                setReqError('At least 1 step must remain');
+                Notification('', 'At least 1 step must remain', 'danger', 3000);
             }
         });
 };
 
-export const CreateNewStep = (newStepName, setCompleted, setReqError) => {
-    GlobalConfiguration();
+export const CreateNewStep = (newStepName, GetStepData, setCompleted, errorCallback) => {
     axios
-        .post('steps/', newStepName)
+        .post('/steps/', newStepName, { headers: { 'Content-Type': 'text/plain' } })
         .then(() => {
-            setCompleted(true);
+            GetStepData();
+            setCompleted();
         })
         .catch((error) => {
             if (error.response.status === RESPONSE_STATUS.BAD_REQUEST) {
-                setReqError('Please enter name of the new step');
+                Notification('', 'Please enter name of the new step', 'danger', 3000);
+            } else if (error.response.status === RESPONSE_STATUS.INTERNAL_SERVER_ERROR) {
+                Notification('Unknown server error', 'Please please contact site administrator', 'danger', 3000);
             }
+            errorCallback();
         });
+};
+
+export const UpdateStepList = (stepList, callback) => {
+    axios.put('/steps/', stepList).then(() => {
+        callback();
+    });
 };
 
 export default LoadData;
