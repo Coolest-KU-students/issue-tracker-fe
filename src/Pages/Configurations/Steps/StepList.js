@@ -10,15 +10,15 @@ import {
     Paper,
 } from '@material-ui/core';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Navbar from '../../GlobalFeatures/Navbar/Navbar';
+import Navbar from '../../../GlobalFeatures/Navbar/Navbar';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Card } from './Card';
+import { Card } from '../Card';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Notification from '../../GlobalFeatures/Notification';
-import LoadData, { UpdateStepList } from '../../DataSources/Steps';
-import NewStepModal from './NewStepModal';
+import Notification from '../../../GlobalFeatures/Notification';
+import LoadData, { UpdateStepList, CreateNewStep, DeleteStep } from '../../../DataSources/Steps';
+import NewStepModal from '../NewStepModal';
 
 const drawerWidth = 240;
 
@@ -79,6 +79,10 @@ const StepList = () => {
         LoadData(setSteps);
     };
 
+    const CreateAndReload = (newStepName, setSavingFinished, errorCallback) => {
+        CreateNewStep(newStepName, GetStepData, setSavingFinished, errorCallback);
+    };
+
     const CardContainer = (props) => {
         {
             const [cards, setCards] = useState(props.data);
@@ -113,6 +117,10 @@ const StepList = () => {
                 [cards]
             );
 
+            const DeleteStepById = (id) => {
+                DeleteStep(id, GetStepData);
+            };
+
             const renderCard = (card, index) => {
                 return (
                     <Card
@@ -122,7 +130,7 @@ const StepList = () => {
                         text={card.name}
                         moveCard={moveCard}
                         draggable={isEditMode}
-                        GetStepData={GetStepData}
+                        DeleteObject={DeleteStepById}
                     />
                 );
             };
@@ -155,7 +163,7 @@ const StepList = () => {
 
     return (
         <React.Fragment>
-            <Navbar PageName="Issue Tracker">
+            <Navbar PageName="Step Configuration" currentListElement="Steps">
                 <div>
                     <ListSubheader inset>Tasks</ListSubheader>
                     <ListItem button onClick={handleOpen}>
@@ -167,7 +175,7 @@ const StepList = () => {
                 </div>
             </Navbar>
             <Modal open={ModalIsOpen} onClose={handleClose}>
-                <NewStepModal GetStepData={GetStepData} handleClose={handleClose} />
+                <NewStepModal ObjectType="Step" ObjectCreationFunction={CreateAndReload} handleClose={handleClose} />
             </Modal>
 
             <Container maxWidth="xl" className={styles.content}>

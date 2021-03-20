@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { CreateNewStep } from '../../DataSources/Steps';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NewStepModal({ GetStepData, handleClose }) {
+export default function NewObjectModal({ ObjectType, ObjectCreationFunction, handleClose }) {
     const styles = useStyles();
     const [savingInProgress, setSavingProgess] = useState(false);
-    const [newStepName, setNewStepName] = useState('');
+    const [newObjectName, setNewObjectName] = useState('');
 
     const errorCallback = () => {
         setSavingProgess(false);
@@ -34,7 +33,7 @@ export default function NewStepModal({ GetStepData, handleClose }) {
 
     const handleLoad = () => {
         setSavingProgess(true);
-        CreateNewStep(newStepName, GetStepData, setSavingFinished, errorCallback);
+        ObjectCreationFunction(newObjectName, setSavingFinished, errorCallback);
     };
 
     const setSavingFinished = () => {
@@ -47,7 +46,7 @@ export default function NewStepModal({ GetStepData, handleClose }) {
         if (regexCheck.test(e.target.value)) {
             e.target.value = '';
         } else {
-            setNewStepName(e.target.value);
+            setNewObjectName(e.target.value);
         }
     };
 
@@ -55,15 +54,15 @@ export default function NewStepModal({ GetStepData, handleClose }) {
         <form className={styles.paper}>
             <Paper style={{ margin: '1rem', padding: '1rem' }}>
                 <Typography variant="h4" style={{ textAlign: 'center' }}>
-                    Create new step:
+                    Create new {ObjectType}
                 </Typography>
                 <TextField
                     id="field"
-                    label="Step name"
+                    label={ObjectType + ' name'}
                     autoFocus
                     style={{ margin: 8 }}
-                    placeholder="Step name"
-                    helperText="Short name to identify step"
+                    placeholder={ObjectType + ' name'}
+                    helperText={'Short name to identify ' + ObjectType}
                     fullWidth
                     disabled={savingInProgress}
                     margin="normal"
@@ -79,7 +78,7 @@ export default function NewStepModal({ GetStepData, handleClose }) {
                         className={styles.button}
                         startIcon={savingInProgress ? <CircularProgress size="20px" color="secondary" /> : <SaveIcon />}
                         onClick={handleLoad}
-                        disabled={!newStepName}
+                        disabled={!newObjectName}
                     >
                         {savingInProgress ? 'Saving...' : 'Save'}
                     </Button>

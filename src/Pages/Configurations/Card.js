@@ -4,12 +4,12 @@ import React from 'react';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DragIndicatorOutlinedIcon from '@material-ui/icons/DragIndicatorOutlined';
-import { DeleteStep } from '../../DataSources/Steps';
+//import { DeleteStep } from '../../DataSources/Steps';
 
 const useStyles = makeStyles((theme) => ({
     cardElement: {
         '&:nth-of-type(odd)': {
-            border: '1px solid blue',
+            border: '2px solid blue',
         },
         '&:nth-of-type(even)': {
             border: '1px solid #00218e',
@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Card = ({ id, text, index, moveCard, draggable, GetStepData }) => {
+export const Card = ({ id, text, index, moveCard, draggable, DeleteObject }) => {
     const styles = useStyles();
     const ref = useRef(null);
 
     const handleDeleteButtonClick = () => {
-        DeleteStep(id, GetStepData);
+        DeleteObject(id);
     };
 
     const [{ handlerId }, drop] = useDrop({
