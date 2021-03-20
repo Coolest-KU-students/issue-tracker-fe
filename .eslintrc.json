@@ -5,8 +5,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "react-app",
-    "prettier"
+    "react-app"
   ],
   "plugins": ["react", "prettier"],
   "rules": {
