@@ -10,8 +10,26 @@ const Authenticate = (credentials, setAuthenticated) => {
             StoreJWTToken(response.data.token);
             setAuthenticated(true);
             setTimeout(() => {
+                WelcomeNotification(credentials.login);
+            }, 5);
+        })
+        .catch((error) => {
+            if (error.response) {
                 ClearAllNotifications();
-                Notification('', 'Welcome back, ' + credentials.login, 'success', 3000);
+                Notification(error.response.data.error, error.response.data.message, 'danger');
+            }
+        });
+};
+
+export const ChangePassword = (credentials, newPassword, callback) => {
+    GlobalConfiguration();
+    axios
+        .post('/pwChange', { credentials, newPassword })
+        .then((response) => {
+            StoreJWTToken(response.data.token);
+            if (typeof callback === typeof (() => {})) callback();
+            setTimeout(() => {
+                WelcomeNotification(credentials.login);
             }, 5);
         })
         .catch((error) => {
@@ -47,3 +65,8 @@ export const CheckJWTIsValid = (setAuthenticated) => {
 };
 
 export default Authenticate;
+
+const WelcomeNotification = (login) => {
+    ClearAllNotifications();
+    Notification('', 'Welcome back, ' + login, 'success', 3000);
+};
