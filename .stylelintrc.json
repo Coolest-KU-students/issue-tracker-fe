@@ -1,9 +1,6 @@
 {
     "extends": ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-sass-guidelines"],
-    "plugins": [
-        "stylelint-order",
-        "stylelint-selector-bem-pattern"
-    ],
+    "plugins": ["stylelint-order", "stylelint-selector-bem-pattern"],
     "ignoreFiles": ["**/styles/vendor/**/*.scss"],
     "rules": {
         "at-rule-no-unknown": [
@@ -102,18 +99,7 @@
         "string-quotes": "single",
         "time-min-milliseconds": 50,
         "unit-no-unknown": true,
-        "unit-allowed-list": [
-            "em",
-            "rem",
-            "s",
-            "px",
-            "%",
-            "fr",
-            "deg",
-            "vh",
-            "vw",
-            "cm"
-        ],
+        "unit-allowed-list": ["em", "rem", "s", "px", "%", "fr", "deg", "vh", "vw", "cm"],
         "value-list-comma-newline-before": "never-multi-line"
     }
 }

@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-//import Link from "@material-ui/core/Link";
 import Grid from '@material-ui/core/Grid';
-//import { LogInUser } from "../../reducers/actions/RoleActions";
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { colors } from '@material-ui/core';
-//import { useDispatch } from "react-redux";
+import { colors, Modal } from '@material-ui/core';
+import PasswordChangeModal from '../UserProfile/PasswordChangeModal';
 import Notification from '../../GlobalFeatures/Notification';
 import { ClearAllNotifications } from '../../GlobalFeatures/Notification';
-//const BackgroundColor = colors.grey[50];
-import PropTypes from 'prop-types';
-
 //TODO: Get The Logo
 function Image() {
     return <AssignmentIcon fontSize="" />;
@@ -51,11 +47,10 @@ export default function LogIn(props) {
     const classes = useStyles();
 
     const [email, setEmail] = useState('');
-
+    const [password, setPassword] = useState('');
+    //TODO: Enhance Modal popup when correct auth error measures are taken
+    const [passwordModal, setPasswordModal] = useState(false);
     const setAuthenticated = props.setAuthenticated;
-
-    //  const dispatch = useDispatch();
-
     document.body.style = 'background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);';
 
     const handleSubmit = (e) => {
@@ -76,6 +71,9 @@ export default function LogIn(props) {
 
     return (
         <div className={classes.page}>
+            <Modal open={passwordModal}>
+                <PasswordChangeModal credentials={(email, password)} />
+            </Modal>
             <Container component="main" maxWidth="sm">
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
@@ -110,6 +108,9 @@ export default function LogIn(props) {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
                         />
                         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                         <Button
