@@ -131,23 +131,6 @@ Navbar.propTypes = {
 };
 
 export default function Navbar(props) {
-    /*const SmallScreenForLeft = useMediaQuery("(min-width:850px)");
-  const SmallScreenForRight = useMediaQuery("(min-width:" + React.Children.count(props.children) * 600 + "px)");
-
-  const [actionAnchorEl, setActionAnchorEl] = React.useState(null);
-  const [hamburgerAnchorEl, setHamburgerAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setActionAnchorEl(event.currentTarget);
-  };
-  const handleHamClick = (event) => {
-    setHamburgerAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setActionAnchorEl(null);
-    setHamburgerAnchorEl(null);
-  };*/
-
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -157,7 +140,6 @@ export default function Navbar(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    //const fixedHeightPaper = classes.paper;
 
     document.body.style = 'background: white';
 
@@ -180,7 +162,7 @@ export default function Navbar(props) {
 
                     <img style={{ height: NavbarHeight }} src={logo} className="App-logo" alt="logo" />
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {props.PageName}
+                        Issue Tracker {props.PageName ? ':: ' + props.PageName : ''}
                     </Typography>
                     <IconButton color="inherit" style={{ display: 'none' }}>
                         <Badge badgeContent={4} color="secondary">
@@ -202,7 +184,7 @@ export default function Navbar(props) {
                     </IconButton>
                 </div>
                 <List>
-                    <NavigationButtons />
+                    <NavigationButtons currentElement={props.currentListElement} />
                 </List>
                 <Divider />
                 <List>{props.children}</List>

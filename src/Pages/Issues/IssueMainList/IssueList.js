@@ -149,30 +149,24 @@ const IssueList = () => {
         GetIssueData(Issues.Column, Issues.Ascending, event.target.value, Issues.PageNumber);
     };
 
-    if (!Loaded)
-        return (
-            <React.Fragment>
-                <Container>Loading...</Container>
-            </React.Fragment>
-        );
-    else
-        return (
-            <React.Fragment>
-                <NavBar PageName="Issue Tracker">
-                    <div>
-                        <ListSubheader inset>Tasks</ListSubheader>
-                        <ListItem button onClick={handleOpen}>
-                            <ListItemIcon>
-                                <AddBoxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Create New Issue" />
-                        </ListItem>
-                    </div>
-                </NavBar>
-                <Modal open={ModalIsOpen} onClose={handleClose}>
-                    <NewIssueModal />
-                </Modal>
+    return (
+        <React.Fragment>
+            <NavBar PageName="Issue List" currentListElement="Issues">
+                <div>
+                    <ListSubheader inset>Tasks</ListSubheader>
+                    <ListItem button onClick={handleOpen}>
+                        <ListItemIcon>
+                            <AddBoxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Create New Issue" />
+                    </ListItem>
+                </div>
+            </NavBar>
+            <Modal open={ModalIsOpen} onClose={handleClose}>
+                <NewIssueModal />
+            </Modal>
 
+            {Loaded ? (
                 <Container maxWidth="xl" className={styles.content}>
                     <TableContainer component={Paper}>
                         <Table>
@@ -329,8 +323,11 @@ const IssueList = () => {
                         </Table>
                     </TableContainer>
                 </Container>
-            </React.Fragment>
-        );
+            ) : (
+                <Container>Loading...</Container>
+            )}
+        </React.Fragment>
+    );
 };
 
 export default IssueList;

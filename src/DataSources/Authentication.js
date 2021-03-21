@@ -37,8 +37,11 @@ export const CheckJWTIsValid = (setAuthenticated) => {
                 setAuthenticated(true);
                 return;
             })
-            .catch(() => {
+            .catch((err) => {
                 setAuthenticated(false);
+                // if (err.request.status === RESPONSE_STATUS.UNAUTHORIZED) {
+                //     Notification('Login session has expired', 'Please log in to create new session', 'info', 3000);
+                // }
             });
     } else setAuthenticated(false);
 };

@@ -5,11 +5,11 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "react-app",
-    "prettier"
+    "react-app"
   ],
   "plugins": ["react", "prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react/prop-types": "off"
   }
 }
