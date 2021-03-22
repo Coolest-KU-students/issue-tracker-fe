@@ -5,17 +5,15 @@ import { RESPONSE_STATUS } from './GlobalConfiguration';
 const LoadData = (setSteps, callback) => {
     axios.get('/steps/').then((response) => {
         setSteps(response.data);
-        if (typeof callback == typeof (() => {})) {
-            callback();
-        }
+        if (typeof callback === typeof (() => {})) callback();
     });
 };
 
-export const DeleteStep = (id, GetStepData) => {
+export const DeleteStep = (id, callback) => {
     axios
         .delete('/steps/' + id)
         .then(() => {
-            GetStepData();
+            if (typeof callback === typeof (() => {})) callback();
         })
         .catch((error) => {
             if (error.response.status === RESPONSE_STATUS.FORBIDDEN) {
@@ -24,12 +22,11 @@ export const DeleteStep = (id, GetStepData) => {
         });
 };
 
-export const CreateNewStep = (newStepName, GetStepData, setCompleted, errorCallback) => {
+export const CreateNewStep = (newStepName, callback, errorCallback) => {
     axios
         .post('/steps/', newStepName, { headers: { 'Content-Type': 'text/plain' } })
         .then(() => {
-            GetStepData();
-            setCompleted();
+            if (typeof callback === typeof (() => {})) callback();
         })
         .catch((error) => {
             if (error.response.status === RESPONSE_STATUS.BAD_REQUEST) {
@@ -43,7 +40,7 @@ export const CreateNewStep = (newStepName, GetStepData, setCompleted, errorCallb
 
 export const UpdateStepList = (stepList, callback) => {
     axios.put('/steps/', stepList).then(() => {
-        callback();
+        if (typeof callback === typeof (() => {})) callback();
     });
 };
 
