@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import { Checkbox, Container, TableFooter, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableHead, Button, Paper } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import React, { useState, useEffect } from 'react';
@@ -12,10 +14,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import 'react-notifications-component/dist/theme.css';
 import Modal from '@material-ui/core/Modal';
 import NewIssueModal from './NewIssueModal';
-import { ImportanceByID } from './ImportanceMappings';
+import NavBar from '../../../GlobalFeatures/Navbar/Navbar';
+import { LoadPaginatedData } from '../../../DataSources/viwIssues';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -240,7 +242,7 @@ const IssueList = ({ AdjustNavbar }) => {
                                 <TableCell width={(100 * ColumnWidths[2]) / SumWidths + '%'} align="right">
                                     <Button
                                         onClick={() => {
-                                            SortData('importance');
+                                            SortData('importance.sortOrder');
                                         }}
                                     >
                                         <Typography variant="h6" align="right">
@@ -295,7 +297,7 @@ const IssueList = ({ AdjustNavbar }) => {
                                         <TableCell className={styles.BodyTableCells}>{Issue.description}</TableCell>
 
                                         <TableCell align="center" className={styles.BodyTableCells}>
-                                            {ImportanceByID(Issue.importance).name}
+                                            {Issue.importance.name}
                                         </TableCell>
 
                                         <TableCell align="center" className={styles.BodyTableCells}>

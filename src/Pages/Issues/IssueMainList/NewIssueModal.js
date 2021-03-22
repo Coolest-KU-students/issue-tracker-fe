@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Importances } from './ImportanceMappings';
 import { CreateNewIssue } from '../../../DataSources/viwIssues';
+import LoadData from '../../../DataSources/Importance';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,6 +33,7 @@ export default function NewIssueModal() {
         description: '',
         importance: 5,
     });
+    const [importances, setImportances] = useState();
 
     const handleLoad = () => {
         setSavingProgess(true);
@@ -42,6 +43,14 @@ export default function NewIssueModal() {
     const setSavingFinished = () => {
         setSavingProgess(false);
     };
+
+    const LoadImportance = () => {
+        LoadData(setImportances);
+    };
+
+    useEffect(() => {
+        LoadImportance();
+    }, []);
 
     const setName = (e) => {
         setIssueMetaData({
@@ -99,24 +108,26 @@ export default function NewIssueModal() {
                     variant="outlined"
                     onChange={setDescription}
                 />
-                <TextField
-                    label="Importance"
-                    disabled={savingInProgress}
-                    select
-                    style={{ margin: 8 }}
-                    helperText="Short name to identify what the issue is about"
-                    fullWidth
-                    required
-                    margin="normal"
-                    variant="outlined"
-                    onChange={setImportance}
-                >
-                    {Importances().map((item) => (
-                        <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                        </MenuItem>
-                    ))}
-                </TextField>
+                {importances && (
+                    <TextField
+                        label="Importance"
+                        disabled={savingInProgress}
+                        select
+                        style={{ margin: 8 }}
+                        helperText="Short name to identify what the issue is about"
+                        fullWidth
+                        required
+                        margin="normal"
+                        variant="outlined"
+                        onChange={setImportance}
+                    >
+                        {importances.map((item) => (
+                            <MenuItem key={item.id} value={item.id}>
+                                {item.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                )}
                 <div style={{ textAlign: 'right' }}>
                     <Button
                         variant="contained"
