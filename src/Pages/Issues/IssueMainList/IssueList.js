@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox, Container, TableFooter, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableHead, Button, Paper } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React, { useState, useEffect } from 'react';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import { makeStyles } from '@material-ui/core/styles';
-import { LoadPaginatedData } from '../../../DataSources/viwIssues';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,7 +13,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Modal from '@material-ui/core/Modal';
 import NewIssueModal from './NewIssueModal';
-import NavBar from '../../../GlobalFeatures/Navbar/Navbar';
 import { LoadPaginatedData } from '../../../DataSources/viwIssues';
 
 const drawerWidth = 240;
