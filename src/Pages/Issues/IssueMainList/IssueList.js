@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Checkbox, Container, TableFooter, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableHead, Button, Paper } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,6 +54,8 @@ const IssueList = ({ AdjustNavbar }) => {
     const [Issues, setIssues] = useState({});
     const [Loaded, setLoaded] = useState(false);
     const [ModalIsOpen, setModalOpen] = useState(false);
+
+    const theme = useSelector((state) => state.Theme);
 
     if (!Loaded) {
         LoadPaginatedData(
@@ -151,17 +154,19 @@ const IssueList = ({ AdjustNavbar }) => {
         AdjustNavbar(props, () => {
             return (
                 <div>
-                    <ListSubheader inset>Tasks</ListSubheader>
+                    <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
+                        Tasks
+                    </ListSubheader>
                     <ListItem button onClick={handleOpen}>
                         <ListItemIcon>
-                            <AddBoxIcon />
+                            <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
                         <ListItemText primary="Create New Issue" />
                     </ListItem>
                 </div>
             );
         });
-    }, []);
+    }, [theme]);
 
     return (
         <React.Fragment>
