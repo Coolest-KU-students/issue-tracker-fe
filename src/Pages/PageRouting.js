@@ -5,6 +5,7 @@ import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/A
 import IssueList from '../Pages/Issues/IssueMainList/IssueList';
 import StepList from './Configurations/Steps/StepList.js';
 import ImportanceList from './Configurations/Imprortances/ImportanceList.js';
+import Navbar from '../GlobalFeatures/Navbar/Navbar.js';
 
 //import IssueList from "./Pages/Issues/IssueMainList/IssueList";
 
@@ -29,31 +30,51 @@ const PageRouting = () => {
         setAuthenticated(false);
     };
 
+    /***********
+      Navbar Control section
+    ***********/
+    const [navbarConfig, setNavbarConfig] = useState({
+        props: '',
+        children: () => {},
+    });
+
+    const AdjustNavbar = (currentPageProps, currentNavbarChildren) => {
+        setNavbarConfig({
+            props: currentPageProps,
+            children: currentNavbarChildren,
+        });
+    };
+
+    /*************/
+
     if (IsLoaded)
         return (
             <React.Fragment>
                 <Router>
                     {IsAuthenticated && (
-                        <Switch>
-                            <Route exact path="/">
-                                <IssueList />
-                            </Route>
-                            <Route exact path="/steps">
-                                <StepList />
-                            </Route>
-                            <Route exact path="/importances">
-                                <ImportanceList />
-                            </Route>
-                            <Route
-                                exact
-                                path="/logout"
-                                render={() => {
-                                    LogOut();
-                                    return <Redirect exact to="/" />;
-                                }}
-                            />
-                            <Redirect exact to="/" />
-                        </Switch>
+                        <>
+                            <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
+                            <Switch>
+                                <Route exact path="/">
+                                    <IssueList AdjustNavbar={AdjustNavbar} />
+                                </Route>
+                                <Route exact path="/steps">
+                                    <StepList AdjustNavbar={AdjustNavbar} />
+                                </Route>
+                                <Route exact path="/importances">
+                                    <ImportanceList AdjustNavbar={AdjustNavbar} />
+                                </Route>
+                                <Route
+                                    exact
+                                    path="/logout"
+                                    render={() => {
+                                        LogOut();
+                                        return <Redirect exact to="/" />;
+                                    }}
+                                />
+                                <Redirect exact to="/" />
+                            </Switch>
+                        </>
                     )}
                     {IsAuthenticated === false && <Login setAuthenticated={AuthenticateUser} />}
                 </Router>

@@ -127,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
 
 Navbar.propTypes = {
     PageName: PropTypes.string,
+    currentListElement: PropTypes.string,
     children: PropTypes.any,
 };
 
@@ -142,7 +143,7 @@ export default function Navbar(props) {
     };
 
     document.body.style = 'background: white';
-
+    console.log(props.currentListElement);
     const NavbarHeight = '45px';
 
     return (
