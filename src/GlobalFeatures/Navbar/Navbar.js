@@ -13,8 +13,11 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Switch from '@material-ui/core/Switch';
 import NavigationButtons from './NavigationButtons';
 import logo from '../../logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChangeTheme } from '../reducers/actions/ThemeActions';
 
 const drawerWidth = 240;
 
@@ -131,6 +134,8 @@ Navbar.propTypes = {
 };
 
 export default function Navbar(props) {
+    const theme = useSelector((state) => state.Theme);
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -141,18 +146,23 @@ export default function Navbar(props) {
         setOpen(false);
     };
 
-    document.body.style = 'background: white';
+    document.body.style = theme.bodyStyle;
+    console.log(theme.navbarColor);
 
     const NavbarHeight = '45px';
+
+    const handleThemeChange = (e) => {
+        dispatch(ChangeTheme(e.target.checked ? 'Light' : 'Dark'));
+    };
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="fixed" className={open ? classes.appBarShift : classes.appBar}>
+            <AppBar position="fixed" className={open ? classes.appBarShift : classes.appBar} color={theme.navbarColor}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
-                        color="inherit"
+                        color={theme.navbarPageNameColor}
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         className={open ? classes.menuButtonHidden : classes.menuButton}
@@ -161,7 +171,14 @@ export default function Navbar(props) {
                     </IconButton>
 
                     <img style={{ height: NavbarHeight }} src={logo} className="App-logo" alt="logo" />
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="black"
+                        noWrap
+                        className={classes.title}
+                        color={theme.navbarPageNameColor}
+                    >
                         Issue Tracker {props.PageName ? ':: ' + props.PageName : ''}
                     </Typography>
                     <IconButton color="inherit" style={{ display: 'none' }}>
@@ -169,6 +186,11 @@ export default function Navbar(props) {
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
+                    <Switch
+                        color="default"
+                        inputProps={{ 'aria-label': 'checkbox with default color' }}
+                        onChange={handleThemeChange}
+                    />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -177,16 +199,17 @@ export default function Navbar(props) {
                     paper: open ? classes.drawerPaper : classes.drawerPaperClose,
                 }}
                 open={open}
+                PaperProps={{ style: theme.navbarDrawerStyle }}
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon />s
                     </IconButton>
                 </div>
                 <List>
                     <NavigationButtons currentElement={props.currentListElement} />
                 </List>
-                <Divider />
+                <Divider light={theme.theme == 'Dark'} />
                 <List>{props.children}</List>
             </Drawer>
         </div>

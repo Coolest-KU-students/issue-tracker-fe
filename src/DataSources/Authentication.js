@@ -1,14 +1,14 @@
 import axios from 'axios';
-import Notification, { ClearAllNotifications } from '../GlobalFeatures/Notification';
 import GlobalConfiguration, { StoreJWTToken, GetJWTToken } from './GlobalConfiguration';
+import Notification, { ClearAllNotifications } from '../GlobalFeatures/Notification';
 
-const Authenticate = (credentials, setAuthenticated) => {
+const Authenticate = (credentials, callback) => {
     GlobalConfiguration();
     axios
         .post('/login', credentials)
         .then((response) => {
             StoreJWTToken(response.data.token);
-            setAuthenticated(true);
+            if (typeof callback === typeof (() => {})) callback();
             setTimeout(() => {
                 WelcomeNotification(credentials.login);
             }, 5);

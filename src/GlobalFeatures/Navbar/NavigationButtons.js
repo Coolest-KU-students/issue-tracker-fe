@@ -15,9 +15,12 @@ import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import Collapse from '@material-ui/core/Collapse';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function NavigationButtons(props) {
     const [open, setOpen] = useState(false);
+
+    const theme = useSelector((state) => state.Theme);
 
     const handleClick = () => {
         setOpen(!open);
@@ -26,47 +29,49 @@ export default function NavigationButtons(props) {
     const styleBasedOnType = (elementType) => {
         if (elementType === props.currentElement)
             return {
-                backgroundColor: 'lightgreen',
+                backgroundColor: theme.currenAppBackground,
             };
         else return { backgroundColor: 'inherit' };
     };
 
     return (
         <div>
-            <ListSubheader inset>Navigation</ListSubheader>
+            <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
+                Navigation
+            </ListSubheader>
             <ListItem button style={styleBasedOnType('Home')}>
                 <ListItemIcon>
-                    <HomeWorkIcon />
+                    <HomeWorkIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItem>
             <ListItem button component={Link} to="/" button style={styleBasedOnType('Issues')}>
                 <ListItemIcon>
-                    <ListAltRoundedIcon />
+                    <ListAltRoundedIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Issue List" />
             </ListItem>
             <ListItem button style={styleBasedOnType('Users')}>
                 <ListItemIcon>
-                    <PeopleIcon />
+                    <PeopleIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
             </ListItem>
             <ListItem
                 button
                 onClick={handleClick}
-                style={open ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'inherit' }}
+                style={open ? { backgroundColor: theme.greyTone } : { backgroundColor: 'inherit' }}
             >
                 <ListItemIcon>
-                    <SettingsApplicationsIcon />
+                    <SettingsApplicationsIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Configuration" />
-                {open ? <ExpandLess /> : <ExpandMore />}
+                {open ? <ExpandLess color={theme.navbarIcon} /> : <ExpandMore color={theme.navbarIcon} />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
                 <ListItem component={Link} to="/steps" button onClick={handleClick} style={styleBasedOnType('Steps')}>
                     <ListItemIcon>
-                        <LibraryAddCheckIcon />
+                        <LibraryAddCheckIcon color={theme.navbarIcon} />
                     </ListItemIcon>
                     <ListItemText primary="Step" />
                 </ListItem>
@@ -78,7 +83,7 @@ export default function NavigationButtons(props) {
                     style={styleBasedOnType('Importance')}
                 >
                     <ListItemIcon>
-                        <PriorityHighIcon />
+                        <PriorityHighIcon color={theme.navbarIcon} />
                     </ListItemIcon>
                     <ListItemText primary="Importance" />
                 </ListItem>
@@ -86,7 +91,7 @@ export default function NavigationButtons(props) {
 
             <ListItem component={Link} to="/logout" button>
                 <ListItemIcon>
-                    <ExitToAppIcon />
+                    <ExitToAppIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Log Out" />
             </ListItem>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import Login from './Login/Login.js';
-import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/Authentication';
-import IssueList from '../Pages/Issues/IssueMainList/IssueList';
 import StepList from './Configurations/Steps/StepList.js';
 import ImportanceList from './Configurations/Imprortances/ImportanceList.js';
-
-//import IssueList from "./Pages/Issues/IssueMainList/IssueList";
+import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/Authentication';
+import IssueList from '../Pages/Issues/IssueMainList/IssueList';
+import { LoggingIn } from '../GlobalFeatures/reducers/actions/UserActions';
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(null);
@@ -20,8 +20,16 @@ const PageRouting = () => {
         setLoaded(true);
     };
 
+    const AuthenticationCallback = (credentials) => {
+        setAuthenticated(true);
+        useDispatch(LoggingIn(credentials.login));
+        console.log(credentials.login);
+    };
+
     const AuthenticateUser = (credentials) => {
-        Authenticate(credentials, setAuthenticated);
+        Authenticate(credentials, () => {
+            AuthenticationCallback(credentials);
+        });
     };
 
     const LogOut = () => {
