@@ -17,7 +17,6 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import { Card } from '../Card';
 import NewStepModal from '../NewStepModal';
 import Notification from '../../../GlobalFeatures/Notification';
-import Navbar from '../../../GlobalFeatures/Navbar/Navbar';
 import LoadData, { UpdateImportanceList, CreateNewImportance, DeleteImportance } from '../../../DataSources/Importance';
 
 const drawerWidth = 240;
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ImportanceList = () => {
+const ImportanceList = ({ AdjustNavbar }) => {
     const styles = useStyles();
     const [isEditMode, setIsEditMode] = useState(false);
     const [importances, setImportances] = useState([]);
@@ -161,19 +160,28 @@ const ImportanceList = () => {
         }
     };
 
-    return (
-        <React.Fragment>
-            <Navbar PageName="Importance Configuration" currentListElement="Importance">
+    useEffect(() => {
+        const props = {
+            PageName: 'Importance Configuration',
+            currentListElement: 'Importance',
+        };
+        AdjustNavbar(props, () => {
+            return (
                 <div>
                     <ListSubheader inset>Tasks</ListSubheader>
                     <ListItem button onClick={handleOpen}>
                         <ListItemIcon>
                             <AddBoxIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Create New " />
+                        <ListItemText primary="Create New" />
                     </ListItem>
                 </div>
-            </Navbar>
+            );
+        });
+    }, []);
+
+    return (
+        <React.Fragment>
             <Modal open={ModalIsOpen} onClose={handleClose}>
                 <NewStepModal
                     ObjectType="Importance"

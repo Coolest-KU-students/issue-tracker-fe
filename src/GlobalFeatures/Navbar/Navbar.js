@@ -130,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 
 Navbar.propTypes = {
     PageName: PropTypes.string,
+    currentListElement: PropTypes.string,
     children: PropTypes.any,
 };
 

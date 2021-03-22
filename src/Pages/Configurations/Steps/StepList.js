@@ -1,3 +1,7 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 import {
     Button,
     Container,
@@ -9,16 +13,11 @@ import {
     Modal,
     Paper,
 } from '@material-ui/core';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Navbar from '../../../GlobalFeatures/Navbar/Navbar';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { DndProvider } from 'react-dnd';
-import update from 'immutability-helper';
 import { Card } from '../Card';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import NewStepModal from '../NewStepModal';
 import Notification from '../../../GlobalFeatures/Notification';
 import LoadData, { UpdateStepList, CreateNewStep, DeleteStep } from '../../../DataSources/Steps';
-import NewStepModal from '../NewStepModal';
 
 const drawerWidth = 240;
 
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const StepList = () => {
+const StepList = ({ AdjustNavbar }) => {
     const styles = useStyles();
     const [isEditMode, setIsEditMode] = useState(false);
     const [steps, setSteps] = useState([]);
@@ -161,9 +160,13 @@ const StepList = () => {
         }
     };
 
-    return (
-        <React.Fragment>
-            <Navbar PageName="Step Configuration" currentListElement="Steps">
+    useEffect(() => {
+        const props = {
+            PageName: 'Step Configuration',
+            currentListElement: 'Steps',
+        };
+        AdjustNavbar(props, () => {
+            return (
                 <div>
                     <ListSubheader inset>Tasks</ListSubheader>
                     <ListItem button onClick={handleOpen}>
@@ -173,7 +176,12 @@ const StepList = () => {
                         <ListItemText primary="Create New Step" />
                     </ListItem>
                 </div>
-            </Navbar>
+            );
+        });
+    }, []);
+
+    return (
+        <React.Fragment>
             <Modal open={ModalIsOpen} onClose={handleClose}>
                 <NewStepModal ObjectType="Step" ObjectCreationFunction={CreateAndReload} handleClose={handleClose} />
             </Modal>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox, Container, TableFooter, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableHead, Button, Paper } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,12 +13,8 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Modal from '@material-ui/core/Modal';
 import NewIssueModal from './NewIssueModal';
-import NavBar from '../../../GlobalFeatures/Navbar/Navbar';
 import { LoadPaginatedData } from '../../../DataSources/viwIssues';
 
-//TODO: update loading screen (atm shows "Loading...")
-
-//import TableSortLabel from "@material-ui/core/TableSortLabel";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     SortingArrow: {
@@ -52,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     NewIssueModal: {},
 }));
 
-const IssueList = () => {
+const IssueList = ({ AdjustNavbar }) => {
     //const [Issues, setIssues] = useState(GetIssueData("ID", true, 10, 0));
     const [Issues, setIssues] = useState({});
     const [Loaded, setLoaded] = useState(false);
@@ -147,9 +143,13 @@ const IssueList = () => {
         GetIssueData(Issues.Column, Issues.Ascending, event.target.value, Issues.PageNumber);
     };
 
-    return (
-        <React.Fragment>
-            <NavBar PageName="Issue List" currentListElement="Issues">
+    useEffect(() => {
+        const props = {
+            PageName: 'Issue List',
+            currentListElement: 'Issues',
+        };
+        AdjustNavbar(props, () => {
+            return (
                 <div>
                     <ListSubheader inset>Tasks</ListSubheader>
                     <ListItem button onClick={handleOpen}>
@@ -159,7 +159,12 @@ const IssueList = () => {
                         <ListItemText primary="Create New Issue" />
                     </ListItem>
                 </div>
-            </NavBar>
+            );
+        });
+    }, []);
+
+    return (
+        <React.Fragment>
             <Modal open={ModalIsOpen} onClose={handleClose}>
                 <NewIssueModal />
             </Modal>

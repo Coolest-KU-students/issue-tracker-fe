@@ -69,19 +69,13 @@ export default function NavigationButtons(props) {
                 {open ? <ExpandLess color={theme.navbarIcon} /> : <ExpandMore color={theme.navbarIcon} />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
-                <ListItem component={Link} to="/steps" button onClick={handleClick} style={styleBasedOnType('Steps')}>
+                <ListItem component={Link} to="/steps" button style={styleBasedOnType('Steps')}>
                     <ListItemIcon>
                         <LibraryAddCheckIcon color={theme.navbarIcon} />
                     </ListItemIcon>
                     <ListItemText primary="Step" />
                 </ListItem>
-                <ListItem
-                    component={Link}
-                    to="/importances"
-                    button
-                    onClick={handleClick}
-                    style={styleBasedOnType('Importance')}
-                >
+                <ListItem component={Link} to="/importances" button style={styleBasedOnType('Importance')}>
                     <ListItemIcon>
                         <PriorityHighIcon color={theme.navbarIcon} />
                     </ListItemIcon>
