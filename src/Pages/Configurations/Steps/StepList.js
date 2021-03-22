@@ -82,7 +82,14 @@ const StepList = ({ AdjustNavbar }) => {
     };
 
     const CreateAndReload = (newStepName, setSavingFinished, errorCallback) => {
-        CreateNewStep(newStepName, GetStepData, setSavingFinished, errorCallback);
+        CreateNewStep(
+            newStepName,
+            () => {
+                GetStepData();
+                setSavingFinished();
+            },
+            errorCallback
+        );
     };
 
     const CardContainer = (props) => {

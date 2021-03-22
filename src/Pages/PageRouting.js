@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { useDispatch } from 'react-redux';
 import Login from './Login/Login.js';
 import StepList from './Configurations/Steps/StepList.js';
-import ImportanceList from './Configurations/Imprortances/ImportanceList.js';
+import ImportanceList from './Configurations/Importances/ImportanceList.js';
 import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/Authentication';
 import IssueList from '../Pages/Issues/IssueMainList/IssueList';
 import { LoggingIn } from '../GlobalFeatures/reducers/actions/UserActions';
