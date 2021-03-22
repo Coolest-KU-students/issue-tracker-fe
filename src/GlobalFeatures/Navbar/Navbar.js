@@ -203,7 +203,7 @@ export default function Navbar(props) {
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />s
+                        <ChevronLeftIcon />
                     </IconButton>
                 </div>
                 <List>
