@@ -148,7 +148,6 @@ export default function Navbar(props) {
     };
 
     document.body.style = theme.bodyStyle;
-    console.log(theme.navbarColor);
 
     const NavbarHeight = '45px';
 

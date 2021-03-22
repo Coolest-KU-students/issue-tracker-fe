@@ -18,6 +18,7 @@ import { Card } from '../Card';
 import NewStepModal from '../NewStepModal';
 import Notification from '../../../GlobalFeatures/Notification';
 import LoadData, { UpdateImportanceList, CreateNewImportance, DeleteImportance } from '../../../DataSources/Importance';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -57,6 +58,7 @@ const ImportanceList = ({ AdjustNavbar }) => {
     const [importances, setImportances] = useState([]);
     const [ModalIsOpen, setModalOpen] = useState(false);
 
+    const theme = useSelector((state) => state.Theme);
     useEffect(() => {
         GetImportanceData();
     }, []);
@@ -168,17 +170,19 @@ const ImportanceList = ({ AdjustNavbar }) => {
         AdjustNavbar(props, () => {
             return (
                 <div>
-                    <ListSubheader inset>Tasks</ListSubheader>
+                    <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
+                        Tasks
+                    </ListSubheader>
                     <ListItem button onClick={handleOpen}>
                         <ListItemIcon>
-                            <AddBoxIcon />
+                            <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
                         <ListItemText primary="Create New" />
                     </ListItem>
                 </div>
             );
         });
-    }, []);
+    }, [theme]);
 
     return (
         <React.Fragment>

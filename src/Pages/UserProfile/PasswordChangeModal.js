@@ -32,8 +32,6 @@ export default function PasswordChangeModal({ credentials }) {
     const [confirmation, setConfirmation] = useState('');
 
     const handleLoad = () => {
-        console.log(password === confirmation);
-
         if (password === confirmation) ChangePassword(credentials, password, setSavingFinished);
         else {
             Notification('', 'Passwords do not match', 'danger', 3000);

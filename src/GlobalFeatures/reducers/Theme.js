@@ -1,7 +1,7 @@
 import { Themes } from './Themes';
 
 const Theme = (state = { Theme: getThemeStyle(getStoredTheme()) }, action) => {
-    if (action.type) return getThemeStyle(action.type);
+    if (action.type) return getThemeStyle(action.type === '@@INIT' ? getStoredTheme() : action.type);
     else return state;
 };
 

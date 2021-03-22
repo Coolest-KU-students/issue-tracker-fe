@@ -18,6 +18,7 @@ import { Card } from '../Card';
 import NewStepModal from '../NewStepModal';
 import Notification from '../../../GlobalFeatures/Notification';
 import LoadData, { UpdateStepList, CreateNewStep, DeleteStep } from '../../../DataSources/Steps';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -56,6 +57,8 @@ const StepList = ({ AdjustNavbar }) => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [steps, setSteps] = useState([]);
     const [ModalIsOpen, setModalOpen] = useState(false);
+
+    const theme = useSelector((state) => state.Theme);
 
     useEffect(() => {
         GetStepData();
@@ -168,17 +171,19 @@ const StepList = ({ AdjustNavbar }) => {
         AdjustNavbar(props, () => {
             return (
                 <div>
-                    <ListSubheader inset>Tasks</ListSubheader>
+                    <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
+                        Tasks
+                    </ListSubheader>
                     <ListItem button onClick={handleOpen}>
                         <ListItemIcon>
-                            <AddBoxIcon />
+                            <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
                         <ListItemText primary="Create New Step" />
                     </ListItem>
                 </div>
             );
         });
-    }, []);
+    }, [theme]);
 
     return (
         <React.Fragment>

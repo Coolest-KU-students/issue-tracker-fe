@@ -9,8 +9,6 @@ import IssueList from '../Pages/Issues/IssueMainList/IssueList';
 import { LoggingIn } from '../GlobalFeatures/reducers/actions/UserActions';
 import Navbar from '../GlobalFeatures/Navbar/Navbar.js';
 
-//import IssueList from "./Pages/Issues/IssueMainList/IssueList";
-
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(null);
     const [IsLoaded, setLoaded] = useState(false);
@@ -26,7 +24,6 @@ const PageRouting = () => {
     const AuthenticationCallback = (credentials) => {
         setAuthenticated(true);
         useDispatch(LoggingIn(credentials.login));
-        console.log(credentials.login);
     };
 
     const AuthenticateUser = (credentials) => {
