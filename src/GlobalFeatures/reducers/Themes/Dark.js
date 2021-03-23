@@ -12,20 +12,13 @@ export const Dark = {
     navbarDrawerStyle: { backgroundColor: '#101010', color: 'white' },
     lineColor: 'white',
     navbarIcon: 'secondary',
-    classes: makeStyles((theme) => ({
-        navbarIcons: {
-            color: 'secondary',
+    tableContainerColor: 'lightgrey',
+    TableRows: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: '#cadafa',
         },
-        paper: {
-            position: 'absolute',
-            width: '33%',
-            marginLeft: '34%',
-            [theme.breakpoints.down('sm')]: {
-                width: '95%',
-                marginLeft: '2.5%',
-            },
-
-            marginTop: '10%',
+        '&:nth-of-type(even)': {
+            backgroundColor: '#afaffa',
         },
-    })),
+    },
 };

@@ -51,7 +51,7 @@ export default function NavigationButtons(props) {
                 </ListItemIcon>
                 <ListItemText primary="Issue List" />
             </ListItem>
-            <ListItem button style={styleBasedOnType('Users')}>
+            <ListItem button component={Link} to="/users" style={styleBasedOnType('Users')}>
                 <ListItemIcon>
                     <PeopleIcon color={theme.navbarIcon} />
                 </ListItemIcon>
