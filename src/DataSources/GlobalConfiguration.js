@@ -2,11 +2,16 @@ import axios from 'axios';
 
 const GlobalConfiguration = () => {
     axios.defaults.baseURL = 'http://localhost:8080/api';
+    UpdateJWTInAxios();
+};
+
+const UpdateJWTInAxios = () => {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + GetJWTToken();
 };
 
 export const StoreJWTToken = (Token) => {
     localStorage.setItem('authToken', Token);
+    UpdateJWTInAxios();
 };
 
 export const GetJWTToken = () => {
