@@ -62,7 +62,7 @@ export default function LogIn(props) {
     };
 
     const LoggingInSuccessfully = () => {
-        Notification('Logging In', 'Please wait while our system processes the request', 'warning');
+        Notification('Logging In', 'Please wait while our system processes the request', 'warning', 2000);
         setAuthenticated({
             login: email,
             password: document.getElementById('password').value,

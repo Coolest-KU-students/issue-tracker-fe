@@ -1,9 +1,8 @@
 import axios from 'axios';
-import GlobalConfiguration, { StoreJWTToken, GetJWTToken } from './GlobalConfiguration';
+import { StoreJWTToken, GetJWTToken } from './GlobalConfiguration';
 import Notification, { ClearAllNotifications } from '../GlobalFeatures/Notification';
 
 const Authenticate = (credentials, callback) => {
-    GlobalConfiguration();
     axios
         .post('/login', credentials)
         .then((response) => {
@@ -22,7 +21,6 @@ const Authenticate = (credentials, callback) => {
 };
 
 export const ChangePassword = (credentials, newPassword, callback) => {
-    GlobalConfiguration();
     axios
         .post('/pwChange', { credentials, newPassword })
         .then((response) => {
@@ -45,8 +43,6 @@ export const CleanJWTToken = () => {
 };
 
 export const CheckJWTIsValid = (setAuthenticated) => {
-    GlobalConfiguration();
-
     if (GetJWTToken()) {
         axios
             .get('/auth')
