@@ -1,16 +1,19 @@
 import axios from 'axios';
 import { StoreJWTToken, GetJWTToken } from './GlobalConfiguration';
 import Notification, { ClearAllNotifications } from '../GlobalFeatures/Notification';
+import { useDispatch } from 'react-redux';
+import { LoggingIn } from '../GlobalFeatures/reducers/actions/UserActions';
 
 const Authenticate = (credentials, callback) => {
     axios
         .post('/login', credentials)
         .then((response) => {
             StoreJWTToken(response.data.token);
-            if (typeof callback === typeof (() => {})) callback();
             setTimeout(() => {
+                if (typeof callback === typeof (() => {})) callback();
                 WelcomeNotification(credentials.login);
-            }, 5);
+            }, 200);
+            SaveUserName(response.data.name);
         })
         .catch((error) => {
             if (error.response) {
@@ -18,6 +21,10 @@ const Authenticate = (credentials, callback) => {
                 Notification(error.response.data.error, error.response.data.message, 'danger');
             }
         });
+};
+
+const SaveUserName = (name) => {
+    useDispatch(LoggingIn(name));
 };
 
 export const ChangePassword = (credentials, newPassword, callback) => {
