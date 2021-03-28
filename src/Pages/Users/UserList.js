@@ -121,7 +121,7 @@ const UsersList = ({ AdjustNavbar }) => {
                         <ListItemIcon>
                             <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
-                        <ListItemText primary="Create New Issue" />
+                        <ListItemText primary="Register New User" />
                     </ListItem>
                 </div>
             );
