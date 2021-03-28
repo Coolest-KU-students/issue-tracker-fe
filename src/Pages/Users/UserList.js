@@ -219,7 +219,6 @@ const UsersList = ({ AdjustNavbar }) => {
                                         <TableCell align="center" className={styles.BodyTableCells}>
                                             {user.LastActive ? (
                                                 <div>
-                                                    <br />{' '}
                                                     {user.LastActive.toString().replace('T', String.fromCharCode(160))}
                                                 </div>
                                             ) : (
