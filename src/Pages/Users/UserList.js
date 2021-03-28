@@ -108,7 +108,7 @@ const UsersList = ({ AdjustNavbar }) => {
 
     useEffect(() => {
         const props = {
-            PageName: 'Issue List',
+            PageName: 'Users',
             currentListElement: 'Users',
         };
         AdjustNavbar(props, () => {
@@ -121,7 +121,7 @@ const UsersList = ({ AdjustNavbar }) => {
                         <ListItemIcon>
                             <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
-                        <ListItemText primary="Register New User" />
+                        <ListItemText primary="Register New" />
                     </ListItem>
                 </div>
             );
@@ -201,7 +201,7 @@ const UsersList = ({ AdjustNavbar }) => {
                                     </Button>
                                 </TableCell>
                                 <TableCell align="left" width={(100 * ColumnWidths[3]) / SumWidths + '%'}>
-                                    <Typography variant="h6">Expire </Typography>
+                                    <Typography variant="h6">EXPIRE</Typography>
                                 </TableCell>
                             </TableHead>
                             <TableBody>

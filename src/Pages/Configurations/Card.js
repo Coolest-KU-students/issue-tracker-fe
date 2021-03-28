@@ -8,12 +8,13 @@ import DragIndicatorOutlinedIcon from '@material-ui/icons/DragIndicatorOutlined'
 
 const useStyles = makeStyles((theme) => ({
     cardElement: {
-        '&:nth-of-type(odd)': {
-            border: '2px solid blue',
-        },
-        '&:nth-of-type(even)': {
-            border: '1px solid #00218e',
-        },
+        // '&:nth-of-type(odd)': {
+        //     border: '2px solid blue',
+        // },
+        // '&:nth-of-type(even)': {
+        //     border: '1px solid #00218e',
+        // },
+        border: '1px solid blue',
         padding: '0.5rem 1rem',
         marginBottom: '.5rem',
         backgroundColor: 'inherit',

@@ -15,6 +15,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import Modal from '@material-ui/core/Modal';
 import NewIssueModal from './NewIssueModal';
 import { LoadPaginatedData } from '../../../DataSources/viwIssues';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
         },
         '&:nth-of-type(even)': {
             backgroundColor: '#cadafa',
+        },
+        textDecoration: 'none',
+        '&:hover': {
+            backgroundColor: '#bac5d6',
         },
     },
     TableHead: {
@@ -161,7 +166,7 @@ const IssueList = ({ AdjustNavbar }) => {
                         <ListItemIcon>
                             <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
-                        <ListItemText primary="Create New Issue" />
+                        <ListItemText primary="Create New" />
                     </ListItem>
                 </div>
             );
@@ -176,7 +181,10 @@ const IssueList = ({ AdjustNavbar }) => {
 
             {Loaded ? (
                 <Container maxWidth="xl" className={styles.content}>
-                    <TableContainer component={Paper}>
+                    <TableContainer
+                        component={Paper}
+                        style={{ padding: '1rem', paddingBottom: '0px', backgroundColor: theme.tableContainerColor }}
+                    >
                         <Table>
                             <TableHead>
                                 <TableCell>
@@ -292,7 +300,12 @@ const IssueList = ({ AdjustNavbar }) => {
                             </TableHead>
                             <TableBody>
                                 {Issues.Issues.map((Issue) => (
-                                    <TableRow key={Issue.id} className={styles.TableRows}>
+                                    <TableRow
+                                        key={Issue.id}
+                                        className={styles.TableRows}
+                                        component={Link}
+                                        to={`/issues/${Issue.id}`}
+                                    >
                                         <TableCell className={styles.BodyTableCells}>{Issue.name}</TableCell>
 
                                         <TableCell className={styles.BodyTableCells}>{Issue.description}</TableCell>

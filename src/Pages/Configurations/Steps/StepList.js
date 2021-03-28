@@ -185,7 +185,7 @@ const StepList = ({ AdjustNavbar }) => {
                         <ListItemIcon>
                             <AddBoxIcon color={theme.navbarIcon} />
                         </ListItemIcon>
-                        <ListItemText primary="Create New Step" />
+                        <ListItemText primary="Create New" />
                     </ListItem>
                 </div>
             );
