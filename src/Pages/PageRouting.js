@@ -21,15 +21,12 @@ const PageRouting = () => {
         setLoaded(true);
     };
 
-    const AuthenticationCallback = (credentials) => {
+    const AuthenticationCallback = () => {
         setAuthenticated(true);
-        useDispatch(LoggingIn(credentials.login));
     };
 
     const AuthenticateUser = (credentials) => {
-        Authenticate(credentials, () => {
-            AuthenticationCallback(credentials);
-        });
+        Authenticate(credentials, AuthenticationCallback);
     };
 
     const LogOut = () => {
