@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Login from './Login/Login.js';
+import UserList from './Users/UserList.js';
 import StepList from './Configurations/Steps/StepList.js';
 import ImportanceList from './Configurations/Importances/ImportanceList.js';
 import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/Authentication';
@@ -64,6 +65,9 @@ const PageRouting = () => {
                                 </Route>
                                 <Route exact path="/steps">
                                     <StepList AdjustNavbar={AdjustNavbar} />
+                                </Route>
+                                <Route exact path="/users">
+                                    <UserList AdjustNavbar={AdjustNavbar} />
                                 </Route>
                                 <Route exact path="/importances">
                                     <ImportanceList AdjustNavbar={AdjustNavbar} />

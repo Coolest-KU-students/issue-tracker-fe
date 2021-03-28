@@ -11,18 +11,9 @@ export const Light = {
     currenAppBackground: 'lightgreen',
     navbarDrawerStyle: { backgroundColor: 'white', textColor: 'white' },
     lineColor: 'black',
-    classes: makeStyles((theme) => ({
-        navbarIcons: {},
-        paper: {
-            position: 'absolute',
-            width: '33%',
-            marginLeft: '34%',
-            [theme.breakpoints.down('sm')]: {
-                width: '95%',
-                marginLeft: '2.5%',
-            },
-
-            marginTop: '10%',
-        },
-    })),
+    tableContainerColor: 'white',
+    TableRows: {
+        OddChild: '#efeffa',
+        EvenChild: '#cadafa',
+    },
 };
