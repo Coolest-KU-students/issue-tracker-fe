@@ -2,7 +2,7 @@ import axios from 'axios';
 import Notification from '../GlobalFeatures/Notification';
 import { RESPONSE_STATUS } from './GlobalConfiguration';
 
-const LoadData = (setSteps, callback) => {
+const LoadStepData = (setSteps, callback) => {
     axios.get('/steps/').then((response) => {
         setSteps(response.data);
         if (typeof callback == typeof (() => {})) callback();
@@ -44,4 +44,4 @@ export const UpdateStepList = (stepList, callback) => {
     });
 };
 
-export default LoadData;
+export default LoadStepData;

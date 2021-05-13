@@ -108,7 +108,6 @@ export default function UserModal({ callback, userDetails }) {
                     autoFocus
                     value={fullName.firstName}
                     style={{ margin: 8 }}
-                    placeholder="First Name"
                     fullWidth
                     disabled={savingInProgress}
                     margin="normal"
@@ -121,7 +120,6 @@ export default function UserModal({ callback, userDetails }) {
                     disabled={savingInProgress}
                     value={fullName.lastName}
                     style={{ margin: 8 }}
-                    placeholder="Last Name"
                     fullWidth
                     margin="normal"
                     multiline

@@ -197,7 +197,7 @@ const IssueList = ({ AdjustNavbar }) => {
                                             style={{ display: 'none' }}
                                         />
                                         <Checkbox id="Closed" onChange={handleCheckbox} />
-                                        Hide Closed
+                                        Show Closed
                                     </Typography>
                                 </TableCell>
                                 <TableCell align="right" width="20%">
@@ -206,7 +206,7 @@ const IssueList = ({ AdjustNavbar }) => {
                                         Show&nbsp;Issues Created&nbsp;By&nbsp;Me
                                     </Typography>
                                 </TableCell>
-                                <TableCell align="right" width="20%">
+                                <TableCell align="right" width="25%">
                                     <Typography>
                                         <Checkbox id="MyResponsobilities" onChange={handleCheckbox} />
                                         Show&nbsp;Issues with My&nbsp;Responsibility

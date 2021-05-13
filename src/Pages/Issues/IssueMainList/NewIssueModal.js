@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CreateNewIssue } from '../../../DataSources/viwIssues';
 import LoadData from '../../../DataSources/Importance';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,13 +36,16 @@ export default function NewIssueModal() {
     });
     const [importances, setImportances] = useState();
 
+    let history = useHistory();
+
     const handleLoad = () => {
         setSavingProgess(true);
         CreateNewIssue(newIssueMetaData, setSavingFinished);
     };
 
-    const setSavingFinished = () => {
+    const setSavingFinished = (id) => {
         setSavingProgess(false);
+        history.push('/issues/' + id);
     };
 
     const LoadImportance = () => {
@@ -86,7 +90,6 @@ export default function NewIssueModal() {
                     label="Issue name"
                     autoFocus
                     style={{ margin: 8 }}
-                    placeholder="Issue Name"
                     helperText="Short name to identify what the issue is about"
                     fullWidth
                     disabled={savingInProgress}
@@ -99,7 +102,6 @@ export default function NewIssueModal() {
                     label="Description"
                     disabled={savingInProgress}
                     style={{ margin: 8 }}
-                    placeholder="Description"
                     helperText="Describe the issue's details"
                     fullWidth
                     margin="normal"

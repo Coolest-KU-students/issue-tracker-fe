@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { CloseIssue } from '../../../DataSources/IssueSteps';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -24,15 +25,25 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DeleteIssue({ id, handleClose }) {
+export default function DeleteIssueModal({ stepId, handleClose, closeCallback }) {
     const [savingInProgress, setSavingProgess] = useState(false);
 
     const handleLoad = () => {
         setSavingProgess(true);
+        closeIssue();
     };
 
     const setSavingFinished = () => {
         setSavingProgess(false);
+    };
+
+    const closeIssue = () => {
+        CloseIssue(stepId, closeIssueCallback);
+    };
+
+    const closeIssueCallback = () => {
+        handleClose();
+        closeCallback();
     };
 
     const styles = useStyles();
@@ -41,16 +52,14 @@ export default function DeleteIssue({ id, handleClose }) {
         <form className={styles.paper}>
             <Paper style={{ margin: '1rem', padding: '1rem' }}>
                 <Typography variant="h5" style={{ textAlign: 'center' }}>
-                    Do you really want to delete this issue?
+                    Do you really want to close this issue?
                 </Typography>
                 <div className={styles.buttons}>
                     <Button
                         variant="contained"
                         color="secondary"
                         size="large"
-                        startIcon={
-                            savingInProgress ? <CircularProgress size="20px" color="secondary" /> : <DeleteIcon />
-                        }
+                        startIcon={savingInProgress ? <CircularProgress size="20px" color="primary" /> : ''}
                         onClick={handleLoad}
                     >
                         Yes
