@@ -9,6 +9,7 @@ import Authenticate, { CheckJWTIsValid, CleanJWTToken } from './../DataSources/A
 import IssueList from '../Pages/Issues/IssueMainList/IssueList';
 import { LoggingIn } from '../GlobalFeatures/reducers/actions/UserActions';
 import Navbar from '../GlobalFeatures/Navbar/Navbar.js';
+import IssueView from './Issues/IssueView/IssueView.js';
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(null);
@@ -60,8 +61,11 @@ const PageRouting = () => {
                         <>
                             <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                             <Switch>
-                                <Route exact path="/">
+                                <Route exact path="/issues">
                                     <IssueList AdjustNavbar={AdjustNavbar} />
+                                </Route>
+                                <Route exact path="/issues/:id">
+                                    <IssueView AdjustNavbar={AdjustNavbar} />
                                 </Route>
                                 <Route exact path="/steps">
                                     <StepList AdjustNavbar={AdjustNavbar} />
@@ -80,7 +84,7 @@ const PageRouting = () => {
                                         return <Redirect exact to="/" />;
                                     }}
                                 />
-                                <Redirect exact to="/" />
+                                <Redirect exact to="/issues" />
                             </Switch>
                         </>
                     )}

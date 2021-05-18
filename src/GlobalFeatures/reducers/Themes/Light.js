@@ -8,7 +8,7 @@ export const Light = {
     navbarPageNameColor: 'inherit',
     greyTone: 'lightgrey',
     bodyStyle: 'background: lightgrey',
-    currenAppBackground: 'lightgreen',
+    currenAppBackground: '#cadafa',
     navbarDrawerStyle: { backgroundColor: 'white', textColor: 'white' },
     lineColor: 'black',
     tableContainerColor: 'white',

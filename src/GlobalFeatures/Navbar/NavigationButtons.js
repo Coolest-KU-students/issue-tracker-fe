@@ -39,12 +39,12 @@ export default function NavigationButtons(props) {
             <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
                 Navigation
             </ListSubheader>
-            <ListItem button style={styleBasedOnType('Home')}>
+            {/* <ListItem button style={styleBasedOnType('Home')}>
                 <ListItemIcon>
                     <HomeWorkIcon color={theme.navbarIcon} />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
-            </ListItem>
+            </ListItem> */}
             <ListItem button component={Link} to="/" button style={styleBasedOnType('Issues')}>
                 <ListItemIcon>
                     <ListAltRoundedIcon color={theme.navbarIcon} />

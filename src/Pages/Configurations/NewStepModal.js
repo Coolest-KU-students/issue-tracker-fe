@@ -61,7 +61,6 @@ export default function NewObjectModal({ ObjectType, ObjectCreationFunction, han
                     label={ObjectType + ' name'}
                     autoFocus
                     style={{ margin: 8 }}
-                    placeholder={ObjectType + ' name'}
                     helperText={'Short name to identify ' + ObjectType}
                     fullWidth
                     disabled={savingInProgress}

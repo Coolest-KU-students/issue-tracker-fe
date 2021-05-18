@@ -38,8 +38,8 @@ export const LoadPaginatedData = (configuration, setIssues, setLoaded, filtering
 };
 
 export const CreateNewIssue = (newIssueData, setCompleted) => {
-    axios.post('/issues/', newIssueData).then(() => {
-        setCompleted(true);
+    axios.post('/issues/', newIssueData).then((response) => {
+        setCompleted(response.data);
     });
 };
 
