@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Typography } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import LoadIssueStepsData, { UpdateIssueStep, CloseIssue } from '../../../DataSources/IssueSteps';
+import { UpdateIssueStep } from '../../../DataSources/IssueSteps';
 import LoadData from '../../../DataSources/Users';
 import LoadStepData from '../../../DataSources/Steps';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Modal from '@material-ui/core/Modal';
-import DeleteIssueModal from '../../../Pages/Issues/IssueView/DeleteIssueModal';
-import { FormatColorResetOutlined } from '@material-ui/icons';
+import CloseIssueModal from './CloseIssueModal';
 import { CreateNewStep } from '../../../DataSources/IssueSteps';
 
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +77,19 @@ export default function IssueStepEditForm({ issueStepData, refreshCallback }) {
     const handleNextStepClose = (key) => {
         setAnchorEl(null);
         setSavingProgess(2);
-        CreateNewStep(issueStepData.id, key, refreshCallback);
+
+        const callback = () => {
+            CreateNewStep(issueStepData.id, key, refreshCallback);
+        };
+
+        UpdateIssueStep(
+            issueStepData.id,
+            {
+                responsible: responsible,
+                comment: comment,
+            },
+            callback
+        );
     };
 
     const handleNextStepCloseMenu = () => {
@@ -110,10 +121,6 @@ export default function IssueStepEditForm({ issueStepData, refreshCallback }) {
         setSavingProgess(0);
     };
 
-    const handleSetName = (e) => {
-        setName(e.target.value);
-    };
-
     const handleSetComment = (e) => {
         setComment(e.target.value);
     };
@@ -125,7 +132,13 @@ export default function IssueStepEditForm({ issueStepData, refreshCallback }) {
     return (
         <React.Fragment>
             <Modal open={ModalIsOpen} onClose={handleClose}>
-                <DeleteIssueModal stepId={issueStepData.id} handleClose={handleClose} closeCallback={refreshCallback} />
+                <CloseIssueModal
+                    stepId={issueStepData.id}
+                    handleClose={handleClose}
+                    closeCallback={refreshCallback}
+                    responsible={responsible}
+                    comment={comment}
+                />
             </Modal>
 
             <Typography className={styles.titleBox} variant="h4">

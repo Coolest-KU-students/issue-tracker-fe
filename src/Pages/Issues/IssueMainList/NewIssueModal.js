@@ -84,7 +84,7 @@ export default function NewIssueModal() {
         <form className={classes.paper}>
             <Paper style={{ margin: '1rem', padding: '1rem' }}>
                 <Typography variant="h4" style={{ textAlign: 'center' }}>
-                    Register new Issue:
+                    Create new Issue:
                 </Typography>
                 <TextField
                     label="Issue name"

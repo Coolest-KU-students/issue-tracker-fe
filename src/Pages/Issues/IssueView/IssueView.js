@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Container, makeStyles, Modal, Paper, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import DeleteIssueModal from './DeleteIssueModal';
+import DeleteIssueModal from './CloseIssueModal';
 import LoadIssueData from '../../../DataSources/Issue';
 import LoadIssueStepsData from '../../../DataSources/IssueSteps';
 import IssueEditForm from './IssueEditForm';
@@ -50,8 +50,6 @@ const IssueView = ({ AdjustNavbar, IssueData }) => {
     const { id } = useParams();
     const [Loaded, setLoaded] = useState(true);
     const [DeleteModalIsOpen, setDeleteModalOpen] = useState(false);
-    const [AddNewModalIsOpen, setAddNewModalOpen] = useState(false);
-    const [CloseModalIsOpen, closeModalOpen] = useState(false);
     const [Issue, setIssue] = useState();
     const [IssueSteps, setIssueSteps] = useState([]);
 
@@ -74,26 +72,6 @@ const IssueView = ({ AdjustNavbar, IssueData }) => {
 
     const getIssueStepData = () => {
         LoadIssueStepsData(id, setIssueSteps);
-    };
-
-    const addNewHandleOpen = () => {
-        setAddNewModalOpen(true);
-    };
-
-    const addNewHandleClose = () => {
-        setAddNewModalOpen(false);
-    };
-
-    const closeHandleOpen = () => {
-        setDeleteModalOpen(true);
-    };
-
-    const closeHandleClose = () => {
-        setDeleteModalOpen(false);
-    };
-
-    const deleteHandleOpen = () => {
-        setDeleteModalOpen(true);
     };
 
     const deleteHandleClose = () => {

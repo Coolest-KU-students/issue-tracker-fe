@@ -257,7 +257,7 @@ const IssueList = ({ AdjustNavbar }) => {
                                         <Typography variant="h6" align="right">
                                             Importance
                                         </Typography>
-                                        {Issues.Column === 'importance' &&
+                                        {Issues.Column === 'importance.sortOrder' &&
                                             (Issues.Ascending ? (
                                                 <ArrowDownwardIcon className={styles.SortingArrow} />
                                             ) : (

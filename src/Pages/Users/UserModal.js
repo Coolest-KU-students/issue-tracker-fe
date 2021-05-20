@@ -101,7 +101,7 @@ export default function UserModal({ callback, userDetails }) {
         <form className={classes.paper}>
             <Paper style={{ margin: '1rem', padding: '1rem' }}>
                 <Typography variant="h4" style={{ textAlign: 'center' }}>
-                    Register new Issue:
+                    {createUser ? 'Register new User:' : 'Edit User'}
                 </Typography>
                 <TextField
                     label="First Name"

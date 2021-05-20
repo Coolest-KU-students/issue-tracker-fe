@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const GlobalConfiguration = () => {
-    axios.defaults.baseURL = 'https://backend-dot-issuetracker99.ew.r.appspot.com/api';
+    //axios.defaults.baseURL = 'https://backend-dot-issuetracker99.ew.r.appspot.com/api';
+    axios.defaults.baseURL = 'http://localhost:8080/api';
     UpdateJWTInAxios();
 };
 
