@@ -62,7 +62,7 @@ const IssueList = ({ AdjustNavbar }) => {
 
     const theme = useSelector((state) => state.Theme);
 
-    if (!Loaded) {
+    useEffect(() => {
         LoadPaginatedData(
             {
                 Column: 'id',
@@ -78,7 +78,7 @@ const IssueList = ({ AdjustNavbar }) => {
                 showIssuesWhereUserIsResponsible: 0,
             }
         );
-    }
+    }, []);
 
     const GetFilteringBooleans = () => {
         return {

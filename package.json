@@ -1,67 +1,67 @@
 {
-  "name": "issue-tracker",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "axios": "^0.21.1",
-    "cross-env": "^7.0.3",
-    "fetch": "^1.1.0",
-    "immutability-helper": "^3.1.1",
-    "react": "^17.0.1",
-    "react-dnd": "^14.0.1",
-    "react-dnd-html5-backend": "^14.0.0",
-    "react-dom": "^17.0.1",
-    "react-notifications-component": "^3.0.3",
-    "react-redux": "^7.2.2",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.2"
-  },
-  "devDependencies": {
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "prettier": "^2.2.1",
-    "stylelint": "^13.11.0",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-sass-guidelines": "^8.0.0",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-order": "^4.1.0",
-    "stylelint-selector-bem-pattern": "^2.1.0"
-  },
-  "scripts": {
-    "start": " react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "npm run -s lint:prettier:check && npm run -s lint:eslint:check && npm run -s lint:stylelint:check",
-    "lint:prettier:check": "prettier --check \"src/**/*.{js,jsx,scss,json,css,md}\"",
-    "lint:prettier:fix": "prettier --write \"src/**/*.{js,jsx,scss,json,css,md}\"",
-    "lint:eslint:check": "eslint \"src/**/*.{js,jsx}\"",
-    "lint:eslint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
-    "lint:stylelint:check": "stylelint \"src/**/*.scss\"",
-    "lint:stylelint:fix": "stylelint \"src/**/*.scss\" --syntax scss --fix",
-    "dev": "cross-env BROWSER=none react-scripts start"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "issue-tracker",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@material-ui/core": "^4.11.3",
+        "@material-ui/icons": "^4.11.2",
+        "axios": "^0.21.1",
+        "cross-env": "^7.0.3",
+        "fetch": "^1.1.0",
+        "immutability-helper": "^3.1.1",
+        "react": "^17.0.1",
+        "react-dnd": "^14.0.1",
+        "react-dnd-html5-backend": "^14.0.0",
+        "react-dom": "^17.0.1",
+        "react-notifications-component": "^3.0.3",
+        "react-redux": "^7.2.2",
+        "react-router": "^5.2.0",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^4.0.2"
+    },
+    "devDependencies": {
+        "eslint": "^7.19.0",
+        "eslint-config-prettier": "^8.1.0",
+        "eslint-config-react-app": "^6.0.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-react": "^7.22.0",
+        "prettier": "^2.2.1",
+        "stylelint": "^13.11.0",
+        "stylelint-config-prettier": "^8.0.2",
+        "stylelint-config-sass-guidelines": "^8.0.0",
+        "stylelint-config-standard": "^20.0.0",
+        "stylelint-order": "^4.1.0",
+        "stylelint-selector-bem-pattern": "^2.1.0"
+    },
+    "scripts": {
+        "start": " react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "lint": "npm run -s lint:prettier:check && npm run -s lint:eslint:check && npm run -s lint:stylelint:check",
+        "lint:prettier:check": "prettier --check \"src/**/*.{js,jsx,scss,json,css,md}\"",
+        "lint:prettier:fix": "prettier --write \"src/**/*.{js,jsx,scss,json,css,md}\"",
+        "lint:eslint:check": "eslint \"src/**/*.{js,jsx}\"",
+        "lint:eslint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
+        "lint:stylelint:check": "stylelint \"src/**/*.scss\"",
+        "lint:stylelint:fix": "stylelint \"src/**/*.scss\" --syntax scss --fix",
+        "dev": "cross-env BROWSER=none react-scripts start"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
