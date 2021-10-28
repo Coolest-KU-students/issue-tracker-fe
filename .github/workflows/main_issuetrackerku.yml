@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'IssueTrackerKU'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_70774F5F0B504176A89BB8320530F7F8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C941B4FADAE649D79F600A640FEAE187 }}
           package: .
